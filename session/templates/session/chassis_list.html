@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Chassis List</h1>
+  {% if chassis_list %}
+    <ul>
+      {% for chassis in chassis_list %}
+      <li>
+        <a href="{{ chassis.get_absolute_url }}">{{ chassis.brand }}</a>
+        ({{chassis.year}})
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no chassis in the database.</p>
+  {% endif %}
+{% endblock %}

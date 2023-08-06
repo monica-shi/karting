@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Karting Data Home</h1>
+  <p>
+    Welcome to KartingData, a website developed by
+    <em>Mozilla Developer Network</em>!
+  </p>
+  <h2>Dynamic content</h2>
+  <p>The database has the following record counts:</p>
+  <ul>
+    <li><strong>Chassis:</strong> {{ num_chassis }}</li>
+    <li><strong>Engines:</strong> {{ num_engines }}</li>
+    <li><strong>Sessions:</strong> {{ num_sessions }}</li>
+  </ul>
+
+<p>
+  You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+</p>
+
+{% endblock %}
