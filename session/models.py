@@ -34,7 +34,7 @@ class Chassis(models.Model):
                                                                     'chassis behaves.')
 
     def __str__(self):
-        return self.brand
+        return str(self.brand) + "-" + str(self.year) + '-' + str(self.model)
 
     def get_absolute_url(self):
         """Returns the URL to access a particular chassis instance"""
@@ -51,7 +51,10 @@ class Engine(models.Model):
     serial_num = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.model
+        if self.nickname:
+            return self.nickname
+        else:
+            return '_'.join([str(self.model), str(self.serial_num)])
 
     def get_absolute_url(self):
         return reverse('engine-detail', args=[str(self.id)])
