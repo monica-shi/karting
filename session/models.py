@@ -2,15 +2,33 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+import datetime
 
-# Create your models here.
+
+BRAND_CHOICES = {
+    ('Tony Kart', 'Tony Kart'),
+    ('Kosmic', 'Kosmic'),
+    ('Red Speed', 'Red Speed'),
+    ('KartRepublic', 'Kart Republic'),
+    ('SODI', 'SODI Kart'),
+    ('CompKart', 'CompKart'),
+    ('BirelArt', 'BirelArt'),
+}
+
+
+def year_choices():
+    return [(r, r) for r in range(2010, datetime.date.today().year+1)]
+
+
+def current_year():
+    return datetime.date.today().year
 
 
 class Chassis(models.Model):
     """Model representing a chassis"""
-    brand = models.CharField(blank=False, max_length=200)
-    year = models.IntegerField(blank=True, null=True, help_text='Enter the year the chassis model '
-                                                                'came out.')
+    brand = models.CharField(blank=False, choices=BRAND_CHOICES, max_length=200)
+    year = models.IntegerField(blank=True, null=True,choices=year_choices(), default=current_year(),
+                               help_text='Enter the year the chassis model came out.')
     model = models.CharField(blank=True, null=True, max_length=200, help_text='Enter prototype, if applicable')
     description = models.TextField(blank=True, null=True, help_text='Enter a description of how this '
                                                                     'chassis behaves.')
