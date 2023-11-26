@@ -18,15 +18,18 @@ class EngineAdmin(admin.ModelAdmin):
 # are inlines/tubularline needed here?
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
-    list_filter = ('date', 'track')
+    list_filter = ('date', 'track', 'race')
     # add weather when implemented; is filtering by date necessary? or does it by default sort by most recent?
 
     fieldsets = (
         (None, {
-            'fields': ('date', 'weather', 'temp', 'track_conditions', 'track')
+            'fields': (('date', 'time'), 'race', 'track', 'track_conditions', 'weather', 'temp')
         }),
         ('Kart Setup', {
-            'fields': (('chassis', 'engine'), ('carburetor', 'jet_size'), 'gear', ('tire', 'rim', 'tire_pressure'),
+            'fields': (('chassis', 'engine', 'carburetor'),
+                       ('high_jetting', 'low_jetting'),
+                       ('engine_driver_size', 'sprocket_size'),
+                       ('tire', 'rim', 'tire_pressure'),
                        ('castor', 'camber'))
         }),  # add another fieldset for times when those fields are implemented in models
     )

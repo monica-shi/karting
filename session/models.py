@@ -60,33 +60,48 @@ class Engine(models.Model):
         return reverse('engine-detail', args=[str(self.id)])
 
 
+RACE_CHOICES = {
+    ('SKUSA', 'Super Karts USA'),
+    ('USPKS', 'US Pro Karting Series'),
+    ('RokCup', 'ROK Cup'),
+    ('NEKC', 'Northeast Karting Championship'),
+    ('Stars', 'Stars'),
+    ('Italian Championship', 'Italian Championship'),
+    ('WSK', 'World Series Karting'),
+    ('Rotax', 'Rotax Races')
+}
+
 class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 
     date = models.DateField(blank=False)
-    weather = models.CharField(blank=False, default='sunny', max_length=200, help_text='Sunny, cloudy, rainy, pouring, etc.')
-    temp = models.IntegerField(blank=True, null=True, help_text='Please enter the temperature in Fahrenheit.')
+    time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
+    race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES)
+    track = models.CharField(blank=False, max_length=200)
     track_conditions = models.TextField(blank=True, null=True, help_text='Please enter a brief description of the'
                                                                          'track conditions.')
+    weather = models.CharField(blank=False, default='sunny', max_length=200, help_text='Sunny, cloudy, rainy, pouring, etc.')
+    temp = models.IntegerField(blank=True, null=True, help_text='Please enter the temperature in Fahrenheit.')
     # air_read = # how to install??
     # gear range might need multiple for shifter karts
     chassis = models.ForeignKey('Chassis', on_delete=models.PROTECT, null=True)
     engine = models.ForeignKey('Engine', on_delete=models.PROTECT, null=True)
-    gear = models.IntegerField(blank=False)
+    engine_driver_size = models.IntegerField(blank=False, choices=[(r, r) for r in range(10, 14)])
+    sprocket_size = models.IntegerField(blank=False)
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
-    jet_size = models.IntegerField(blank=False)
-    castor = models.IntegerField(blank=True, null=True)
-    camber = models.IntegerField(blank=True, null=True)
+    high_jetting = models.IntegerField(blank=True)
+    low_jetting = models.IntegerField(blank=True)
+    castor = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
+    camber = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     tire_pressure = models.CharField(blank=False, max_length=200)  # can't do integer bc sometimes have floats
     carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
-    track = models.CharField(blank=False, max_length=200)
 
     # need time1, time2, time2, max RPM1, max RPM2, max RPM3, and engine temps
 
     # add all return statements !
     def __str__(self):
-        return self.date
+        return '-'.join([str(self.date), str(self.time), str(self.track)])
 
     def get_absolute_url(self):
         return reverse('session-detail', args=[str(self.id)])
