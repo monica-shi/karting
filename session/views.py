@@ -27,6 +27,7 @@ def index(request):
 
 class ChassisListView(generic.ListView):
     model = Chassis
+    context_object_name = 'chassis_list'
     paginate_by = 10
 
 
@@ -36,6 +37,7 @@ class ChassisDetailView(generic.DetailView):
 
 class EngineListView(generic.ListView):
     model = Engine
+    context_object_name = 'engine_list'
     paginate_by = 10
 
 
@@ -45,6 +47,7 @@ class EngineDetailView(generic.DetailView):
 
 class SessionListView(generic.ListView):
     model = Session
+    context_object_name = 'session_list'
     paginate_by = 10
 
 
