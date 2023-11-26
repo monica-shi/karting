@@ -41,3 +41,12 @@ class EngineListView(generic.ListView):
 
 class EngineDetailView(generic.DetailView):
     model = Engine
+
+
+class SessionListView(generic.ListView):
+    model = Session
+    paginate_by = 10
+
+
+class SessionDetailView(generic.DetailView):
+    model = Session
