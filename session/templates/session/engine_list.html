@@ -6,7 +6,7 @@
     <ul>
       {% for engine in engine_list %}
       <li>
-        <a href="{{ engine.get_absolute_url }}">{{ engine.manufacturer }}</a>
+        <a href="{{ engine.get_absolute_url }}">{{ engine }}</a>
         ({{engine.model}})
       </li>
       {% endfor %}
