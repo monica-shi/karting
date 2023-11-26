@@ -20,6 +20,7 @@ def index(request):
         'num_chassis': num_chassis,
         'num_engines': num_engines,
         'num_sessions': num_sessions,
+        'num_visits': num_visits,
     }
 
     return render(request, 'index.html', context=context)

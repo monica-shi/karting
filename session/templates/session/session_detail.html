@@ -3,9 +3,11 @@
 {% block content %}
   <h1>Title: {{ session.race }}</h1>
 
-  <p><strong>Date:</strong> <a href="">{{ session.date }}</a></p>
+  <p><strong>Date:</strong> {{ session.date }}</p>
   <p><strong>Time:</strong> {{ session.time }}</p>
   <p><strong>Track:</strong> {{ session.track }}</p>
+  <p><strong>Chassis:</strong> <a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></p>
+  <p><strong>Engine:</strong> <a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></p>
 
 <!--  <div style="margin-left:20px;margin-top:20px">-->
 <!--    <h4>Copies</h4>-->
