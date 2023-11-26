@@ -71,6 +71,7 @@ RACE_CHOICES = {
     ('Rotax', 'Rotax Races')
 }
 
+
 class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 

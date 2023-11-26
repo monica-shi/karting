@@ -6,7 +6,7 @@
     <ul>
       {% for chassis in chassis_list %}
       <li>
-        <a href="{{ chassis.get_absolute_url }}">{{ chassis.brand }}</a>
+        <a href="{{ chassis.get_absolute_url }}">{{ chassis }}</a>
         ({{chassis.year}})
       </li>
       {% endfor %}
