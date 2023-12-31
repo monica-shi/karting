@@ -10,6 +10,6 @@ run:
     - pip3 install pipenv
     - pipenv install
     - pip3 install -r requirements.txt
-  command: python3 manage.py collectstatic && gunicorn --workers 1 karting.wsgi
+  command: sh startup.sh
   network:
     port: 8000
