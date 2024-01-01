@@ -80,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'karting',
-        'USER': 'monicashi',
+        'USER': 'karting',
         'PASSWORD': 'Sh1Family!',
-        'HOST': '127.0.0.1',
+        'HOST': 'karting-test.cm4m9ic6mmhq.us-east-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
