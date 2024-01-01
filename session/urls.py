@@ -9,4 +9,7 @@ urlpatterns = [
     path('engine/<int:pk>', views.EngineDetailView.as_view(), name='engine-detail'),
     path('session/', views.SessionListView.as_view(), name='session'),
     path('session/<int:pk>', views.SessionDetailView.as_view(), name='session-detail'),
+
+    path('session/add/', views.create_session, name='add-session'),
+
 ]
