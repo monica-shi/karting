@@ -7,8 +7,12 @@
       {% for session in session_list %}
       <li>
         <a href="{{ session.get_absolute_url }}">{{ session }}</a>
-        ({{session.track}})
-      </li>
+        {% if perms.session.change_session %}
+        <a href="{% url 'session-update' session.id %}">Update Session</a>
+        {% endif %}
+        {% if perms.session.delete_session %}
+        <a href="{% url 'session-delete' session.id %}">Delete Session</a></li>
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}

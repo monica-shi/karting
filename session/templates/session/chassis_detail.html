@@ -8,4 +8,18 @@
   <p><strong>Model:</strong> {{ chassis.model }}</p>
   <p><strong>Description:</strong> {{ chassis.description }}</p>
 
+
+  {% if perms.session.change_chassis or perms.session.delete_chassis %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.session.change_chassis %}
+      <li><a href="{% url 'chassis-update' chassis.id %}">Update Chassis</a></li>
+    {% endif %}
+    {% if perms.session.delete_chassis %}
+      <li><a href="{% url 'chassis-delete' chassis.id %}">Delete Chassis</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
+
 {% endblock %}

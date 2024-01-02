@@ -7,8 +7,12 @@
       {% for engine in engine_list %}
       <li>
         <a href="{{ engine.get_absolute_url }}">{{ engine }}</a>
-        ({{engine.model}})
-      </li>
+        {% if perms.session.change_engine %}
+        <a href="{% url 'engine-update' engine.id %}">Update Engine</a>
+        {% endif %}
+        {% if perms.session.delete_engine %}
+        <a href="{% url 'engine-delete' engine.id %}">Delete Engine</a></li>
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}

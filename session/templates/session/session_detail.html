@@ -9,6 +9,17 @@
   <p><strong>Chassis:</strong> <a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></p>
   <p><strong>Engine:</strong> <a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></p>
 
+  {% if perms.session.change_session or perms.session.delete_session %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.session.change_session %}
+      <li><a href="{% url 'session-update' session.id %}">Update Session</a></li>
+    {% endif %}
+    {% if perms.session.delete_session %}
+      <li><a href="{% url 'session-delete' session.id %}">Delete Session</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
 <!--  <div style="margin-left:20px;margin-top:20px">-->
 <!--    <h4>Copies</h4>-->
 
