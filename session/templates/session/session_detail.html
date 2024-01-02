@@ -1,14 +1,64 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Title: {{ session.race }}</h1>
+  <h1>{{ session.race }} {{session.date}} {{session.time}}</h1>
 
   <ul>
-    <li><strong>Date:</strong> {{ session.date }}<</li>
-    <li><strong>Time:</strong> {{ session.time }}</li>
     <li><strong>Track:</strong> {{ session.track }}</li>
+    <li>Track Conditions: {{ session.track_conditions }}</li>
     <li><strong>Chassis:</strong> <a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></li>
     <li><strong>Engine:</strong> <a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></li>
   </ul>
+
+  <div class="container-fluid text-right">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"><strong>Best lap</strong></div>
+      <div class="col"><strong>Second best lap</strong></div>
+      <div class="col"><strong>Third best lap</strong></div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Lap time</strong></div>
+      <div class="col">{{ session.lap_time1 }}</div>
+      <div class="col">{{ session.lap_time2 }}</div>
+      <div class="col">{{ session.lap_time3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Max RPM</strong></div>
+      <div class="col">{{ session.rpm_max1 }}</div>
+      <div class="col">{{ session.rpm_max2 }}</div>
+      <div class="col">{{ session.rpm_max3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Min RPM</strong></div>
+      <div class="col">{{ session.rpm_min1 }}</div>
+      <div class="col">{{ session.rpm_min2 }}</div>
+      <div class="col">{{ session.rpm_min3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Max EGT</strong></div>
+      <div class="col">{{ session.egt_max1 }}</div>
+      <div class="col">{{ session.egt_max2 }}</div>
+      <div class="col">{{ session.egt_max3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Min EGT</strong></div>
+      <div class="col">{{ session.egt_min1 }}</div>
+      <div class="col">{{ session.egt_min2 }}</div>
+      <div class="col">{{ session.egt_min3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Max Speed</strong></div>
+      <div class="col">{{ session.speed_max1 }}</div>
+      <div class="col">{{ session.speed_max2 }}</div>
+      <div class="col">{{ session.speed_max3 }}</div>
+    </div>
+    <div class="row">
+      <div class="col"><strong>Min Speed</strong></div>
+      <div class="col">{{ session.speed_min1 }}</div>
+      <div class="col">{{ session.speed_min2 }}</div>
+      <div class="col">{{ session.speed_min3 }}</div>
+    </div>
+  </div>
 
 {% endblock %}
