@@ -99,8 +99,9 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
     # need time1, time2, time2, max RPM1, max RPM2, max RPM3, and engine temps
-
     # add all return statements !
+
+
     def __str__(self):
         return '-'.join([str(self.date), str(self.time), str(self.track)])
 
