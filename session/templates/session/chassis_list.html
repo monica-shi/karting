@@ -7,7 +7,12 @@
       {% for chassis in chassis_list %}
       <li>
         <a href="{{ chassis.get_absolute_url }}">{{ chassis }}</a>
-      </li>
+        {% if perms.session.change_chassis %}
+        <a href="{% url 'chassis-update' chassis.id %}">Update Chassis</a>
+        {% endif %}
+        {% if perms.session.delete_chassis %}
+        <a href="{% url 'chassis-delete' chassis.id %}">Delete Chassis</a></li>
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}

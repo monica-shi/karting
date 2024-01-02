@@ -61,4 +61,16 @@
     </div>
   </div>
 
+  {% if perms.session.change_session or perms.session.delete_session %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.session.change_session %}
+      <li><a href="{% url 'session-update' session.id %}">Update Session</a></li>
+    {% endif %}
+    {% if perms.session.delete_session %}
+      <li><a href="{% url 'session-delete' session.id %}">Delete Session</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
 {% endblock %}

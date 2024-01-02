@@ -5,9 +5,20 @@
 
   <p><strong>Model:</strong> <a href="">{{ engine.model }}</a></p>
   <!-- author detail link not yet defined -->
-  <p><strong>Nickname:</strong> {{ book.nickname }}</p>
-  <p><strong>Serial Number:</strong> {{ book.serial_num }}</p>
+  <p><strong>Nickname:</strong> {{ engine.nickname }}</p>
+  <p><strong>Serial Number:</strong> {{ engine.serial_num }}</p>
 
+  {% if perms.session.change_engine or perms.session.delete_engine %}
+  <hr>
+  <ul class="sidebar-nav">
+    {% if perms.session.change_engine %}
+      <li><a href="{% url 'engine-update' engine.id %}">Update Engine</a></li>
+    {% endif %}
+    {% if perms.session.delete_engine %}
+      <li><a href="{% url 'engine-delete' engine.id %}">Delete Engine</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
 <!--  <div style="margin-left:20px;margin-top:20px">-->
 <!--    <h4>Copies</h4>-->
 

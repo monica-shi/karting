@@ -131,6 +131,8 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                      help_text='The min speed of the third best lap')
 
     # add all return statements !
+
+
     def __str__(self):
         return '-'.join([str(self.date), str(self.time), str(self.track)])
 
