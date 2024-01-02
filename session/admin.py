@@ -32,4 +32,15 @@ class SessionAdmin(admin.ModelAdmin):
                        ('tire', 'rim', 'tire_pressure'),
                        ('castor', 'camber'))
         }),  # add another fieldset for times when those fields are implemented in models
+        ('Session Result', {
+            'fields': (
+                ('lap_time1', 'lap_time2', 'lap_time3'),
+                ('rpm_max1', 'rpm_max2', 'rpm_max3'),
+                ('rpm_min1', 'rpm_min2', 'rpm_min3'),
+                ('egt_max1', 'egt_max2', 'egt_max3'),
+                ('egt_min1', 'egt_min2', 'egt_min3'),
+                ('speed_max1', 'speed_max2', 'speed_max3'),
+                ('speed_min1', 'speed_min2', 'speed_min3')
+            )
+        }),
     )

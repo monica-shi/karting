@@ -91,14 +91,44 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     sprocket_size = models.IntegerField(blank=False)
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
-    high_jetting = models.IntegerField(blank=True)
-    low_jetting = models.IntegerField(blank=True)
+    high_jetting = models.IntegerField(blank=True, null=True)
+    low_jetting = models.IntegerField(blank=True, null=True)
     castor = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     camber = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     tire_pressure = models.CharField(blank=False, max_length=200)  # can't do integer bc sometimes have floats
     carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
     # need time1, time2, time2, max RPM1, max RPM2, max RPM3, and engine temps
+    lap_time1 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
+                                    help_text='The best lap time')
+    lap_time2 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
+                                    help_text='The second best lap time')
+    lap_time3 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
+                                    help_text='The third best lap time')
+    rpm_max1 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the best lap')
+    rpm_max2 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the second best lap')
+    rpm_max3 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the third best lap')
+    rpm_min1 = models.IntegerField(blank=True, null=True, help_text='min RPM of the best lap')
+    rpm_min2 = models.IntegerField(blank=True, null=True, help_text='min RPM of the second best lap')
+    rpm_min3 = models.IntegerField(blank=True, null=True, help_text='min RPM of the third best lap')
+    egt_max1 = models.IntegerField(blank=True, null=True, help_text='Max EGT of the best lap')
+    egt_max2 = models.IntegerField(blank=True, null=True, help_text='Max EGT of the second best lap')
+    egt_max3 = models.IntegerField(blank=True, null=True, help_text='Max EGT of the third best lap')
+    egt_min1 = models.IntegerField(blank=True, null=True, help_text='min EGT of the best lap')
+    egt_min2 = models.IntegerField(blank=True, null=True, help_text='min EGT of the second best lap')
+    egt_min3 = models.IntegerField(blank=True, null=True, help_text='min EGT of the third best lap')
+    speed_max1 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The max speed of the best lap')
+    speed_max2 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The max speed of the second best lap')
+    speed_max3 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The max speed of the third best lap')
+    speed_min1 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The min speed of the best lap')
+    speed_min2 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The min speed of the second best lap')
+    speed_min3 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                     help_text='The min speed of the third best lap')
 
     # add all return statements !
     def __str__(self):
