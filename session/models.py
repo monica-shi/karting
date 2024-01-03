@@ -72,11 +72,11 @@ RACE_CHOICES = {
 }
 
 SESSION_TYPES = {
-    ('P', 'General Practice'),
-    ('Q', 'Qualifying Practice'),
-    ('H', 'Heat race'),
-    ('PF', 'Pre-final race'),
-    ('F', 'Final race'),
+    ('Practice', 'General Practice'),
+    ('Qualifying', 'Qualifying Practice'),
+    ('Heat', 'Heat race'),
+    ('Pre-final', 'Pre-final race'),
+    ('Final', 'Final race'),
 }
 
 
@@ -86,7 +86,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     date = models.DateField(blank=False)
     time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES)
-    session_type = models.CharField(blank=False, null=False, default='P', max_length=3, choices=SESSION_TYPES)
+    session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
     track = models.CharField(blank=False, max_length=200)
     track_conditions = models.TextField(blank=True, null=True, help_text='Please enter a brief description of the'
                                                                          'track conditions.')
@@ -101,10 +101,20 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
     high_jetting = models.IntegerField(blank=True, null=True)
-    low_jetting = models.IntegerField(blank=True, null=True)
+    low_jetting = models.IntegerField(blank=True, null=True,
+                                      help_text='Low jetting for Tillotson carb (in minutes)'
+                                                ' or main jet size for Dellorto carb')
     castor = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     camber = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
-    tire_pressure = models.CharField(blank=False, max_length=200)  # can't do integer bc sometimes have floats
+    #tire_pressure = models.CharField(blank=False, max_length=200)  # can't do integer bc sometimes have floats
+    tire_pressure_fr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                           help_text='Pressure of the front right tire')
+    tire_pressure_fl = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                           help_text='Pressure of the front left tire')
+    tire_pressure_rl = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                           help_text='Pressure of the rear left tire')
+    tire_pressure_rr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                           help_text='Pressure of the rear right tire')
     carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
     # need time1, time2, time2, max RPM1, max RPM2, max RPM3, and engine temps

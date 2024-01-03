@@ -1,13 +1,27 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>{{ session.race }} {{session.date}} {{session.time}}</h1>
+  <h1>{{ session.race }} ---- {{ session.session_type }} ---- {{session.date}} ---- {{session.time}}</h1>
 
   <ul>
     <li><strong>Track:</strong> {{ session.track }}</li>
-    <li>Track Conditions: {{ session.track_conditions }}</li>
+    <li><strong>Track Conditions:</strong> {{ session.track_conditions }}</li>
     <li><strong>Chassis:</strong> <a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></li>
     <li><strong>Engine:</strong> <a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></li>
+    <li><strong>Weather:</strong> {{ session.weather }} </li>
+    <li><strong>Track temperature:</strong> {{ session.temp }} </li>
+    <li><strong>Engine driver size:</strong> {{ session.engine_driver_size }}</li>
+    <li><strong>Sprocket size:</strong> {{ session.sprocket_size }}</li>
+    <li><strong>Tire:</strong> {{ session.tire }}</li>
+    <li><strong>Rim:</strong> {{ session.rim }}</li>
+    <li><strong>Low jetting for Tillotson carb or main jet size for Dellorto carb:</strong> {{ session.low_jetting }}</li>
+    <li><strong>High jetting:</strong> {{ session.high_jetting }}</li>
+    <li><strong>Castor:</strong> {{ session.castor }}</li>
+    <li><strong>Camber:</strong> {{ session.camber }}</li>
+    <li><strong>Tire pressure front right:</strong> {{ session.tire_pressure_fr }}</li>
+    <li><strong>Tire pressure front left:</strong> {{ session.tire_pressure_fl }}</li>
+    <li><strong>Tire pressure rear left:</strong> {{ session.tire_pressure_rl }}</li>
+    <li><strong>Tire pressure rear right:</strong> {{ session.tire_pressure_rr }}</li>
   </ul>
 
   <div class="container-fluid text-right">

@@ -28,9 +28,9 @@ class SessionAdmin(admin.ModelAdmin):
         ('Kart Setup', {
             'fields': (('chassis', 'engine', 'carburetor'),
                        ('high_jetting', 'low_jetting'),
+                       ('castor', 'camber'),
                        ('engine_driver_size', 'sprocket_size'),
-                       ('tire', 'rim', 'tire_pressure'),
-                       ('castor', 'camber'))
+                       ('tire', 'rim', 'tire_pressure_fl', 'tire_pressure_fr', 'tire_pressure_rl', 'tire_pressure_rr'))
         }),  # add another fieldset for times when those fields are implemented in models
         ('Session Result', {
             'fields': (
