@@ -71,6 +71,14 @@ RACE_CHOICES = {
     ('Rotax', 'Rotax Races')
 }
 
+SESSION_TYPES = {
+    ('P', 'General Practice'),
+    ('Q', 'Qualifying Practice'),
+    ('H', 'Heat race'),
+    ('PF', 'Pre-final race'),
+    ('F', 'Final race'),
+}
+
 
 class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
@@ -78,6 +86,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     date = models.DateField(blank=False)
     time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES)
+    session_type = models.CharField(blank=False, null=False, default='P', max_length=3, choices=SESSION_TYPES)
     track = models.CharField(blank=False, max_length=200)
     track_conditions = models.TextField(blank=True, null=True, help_text='Please enter a brief description of the'
                                                                          'track conditions.')
