@@ -168,9 +168,7 @@ class EngineDelete(PermissionRequiredMixin, DeleteView):
 
 class SessionCreate(PermissionRequiredMixin, CreateView):
     model = Session
-    fields = ['date', 'time', 'race', 'track', 'track_conditions', 'weather', 'temp', 'chassis', 'engine',
-              'engine_driver_size', 'sprocket_size', 'tire', 'rim', 'high_jetting', 'low_jetting',
-              'castor', 'camber', 'tire_pressure_fl', 'tire_pressure_fr', 'tire_pressure_rl', 'tire_pressure_rr']
+    fields = '__all__'
     initial = {'date': datetime.datetime.now().date, 'time': datetime.datetime.now().time}
     permission_required = 'session.add_session'
 
