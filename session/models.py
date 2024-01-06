@@ -118,7 +118,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     tire_pressure_rr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                            help_text='Pressure of the rear right tire')
 
-    # carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
+    carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
     lap_time1 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
                                     help_text='The best lap time')

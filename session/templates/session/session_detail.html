@@ -26,7 +26,28 @@
     <li><strong>Tire pressure rear right:</strong> {{ session.tire_pressure_rr }}</li>
   </ul>
 
-  <div class="container-fluid text-right">
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col"><strong>Tire pressure front right</strong></div>
+      <div class = "col"><strong>Tire pressure front left</strong></div>
+      <div class = "col"><strong>Tire pressure rear left</strong></div>
+      <div class = "col"><strong>Tire pressure rear right</strong></div>
+    </div>
+    <div class="row">
+      <div class = "col">{{ session.tire_pressure_fr }}</div>
+      <div class = "col">{{ session.tire_pressure_fl }}</div>
+      <div class = "col">{{ session.tire_pressure_rl }}</div>
+      <div class = "col">{{ session.tire_pressure_rr }}</div>
+    </div>
+    <div class="row">
+      <div class = "col">{{ session.tire_pressure_fr_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_fl_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_rl_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_rr_hot }}</div>
+    </div>
+  </div>
+
+  <div class="container-fluid text-right" style="margin-top:50px;">
     <div class="row">
       <div class="col"></div>
       <div class="col"><strong>Best lap</strong></div>
@@ -77,14 +98,6 @@
     </div>
   </div>
 
-  <div class="container-fluid text-right">
-    <div class="row">
-      <div class = "col">{{ session.tire_pressure_fr_hot }}</div>
-      <div class = "col">{{ session.tire_pressure_fl_hot }}</div>
-      <div class = "col">{{ session.tire_pressure_rl_hot }}</div>
-      <div class = "col">{{ session.tire_pressure_rr_hot }}</div>
-    </div>
-  </div>
 
   {% if perms.session.change_session or perms.session.delete_session %}
   <hr>
