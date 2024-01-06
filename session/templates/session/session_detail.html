@@ -18,6 +18,8 @@
     <li><strong>High jetting:</strong> {{ session.high_jetting }}</li>
     <li><strong>Castor:</strong> {{ session.castor }}</li>
     <li><strong>Camber:</strong> {{ session.camber }}</li>
+    <li><strong>Rear Axle:</strong> {{ session.rear_axle_type }}</li>
+    <li><strong>Rear Width:</strong> {{ session.rear_width }}</li>
     <li><strong>Tire pressure front right:</strong> {{ session.tire_pressure_fr }}</li>
     <li><strong>Tire pressure front left:</strong> {{ session.tire_pressure_fl }}</li>
     <li><strong>Tire pressure rear left:</strong> {{ session.tire_pressure_rl }}</li>
@@ -72,6 +74,15 @@
       <div class="col">{{ session.speed_min1 }}</div>
       <div class="col">{{ session.speed_min2 }}</div>
       <div class="col">{{ session.speed_min3 }}</div>
+    </div>
+  </div>
+
+  <div class="container-fluid text-right">
+    <div class="row">
+      <div class = "col">{{ session.tire_pressure_fr_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_fl_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_rl_hot }}</div>
+      <div class = "col">{{ session.tire_pressure_rr_hot }}</div>
     </div>
   </div>
 

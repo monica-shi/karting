@@ -106,7 +106,9 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                                 ' or main jet size for Dellorto carb')
     castor = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     camber = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
-    #tire_pressure = models.CharField(blank=False, max_length=200)  # can't do integer bc sometimes have floats
+    rear_axle_type = models.CharField(blank=False, null=True, max_length=10,
+                                      help_text='The type of the real axle')
+    rear_width = models.IntegerField(blank=True, null=True, help_text='Rear width in mm')
     tire_pressure_fr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                            help_text='Pressure of the front right tire')
     tire_pressure_fl = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
@@ -115,9 +117,9 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                            help_text='Pressure of the rear left tire')
     tire_pressure_rr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                            help_text='Pressure of the rear right tire')
-    carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
-    # need time1, time2, time2, max RPM1, max RPM2, max RPM3, and engine temps
+    # carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
+
     lap_time1 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
                                     help_text='The best lap time')
     lap_time2 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
@@ -149,8 +151,14 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     speed_min3 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                      help_text='The min speed of the third best lap')
 
-    # add all return statements !
-
+    tire_pressure_fr_hot = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                               help_text='Pressure of the front right tire')
+    tire_pressure_fl_hot = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                               help_text='Pressure of the front left tire')
+    tire_pressure_rl_hot = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                               help_text='Pressure of the rear left tire')
+    tire_pressure_rr_hot = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
+                                               help_text='Pressure of the rear right tire')
 
     def __str__(self):
         return '-'.join([str(self.date), str(self.time), str(self.track)])
