@@ -121,11 +121,11 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     carburetor = models.CharField(blank=True, null=True, max_length=200, help_text='Type of carb.')
 
     lap_time1 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
-                                    help_text='The best lap time')
+                                    help_text='The best lap time, in seconds')
     lap_time2 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
-                                    help_text='The second best lap time')
+                                    help_text='The second best lap tim, in seconds')
     lap_time3 = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=3,
-                                    help_text='The third best lap time')
+                                    help_text='The third best lap time, in seconds')
     rpm_max1 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the best lap')
     rpm_max2 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the second best lap')
     rpm_max3 = models.IntegerField(blank=True, null=True, help_text='Max RPM of the third best lap')
