@@ -61,6 +61,7 @@ class Engine(models.Model):
 
 
 RACE_CHOICES = {
+    ('None', 'None'),
     ('SKUSA', 'Super Karts USA'),
     ('USPKS', 'US Pro Karting Series'),
     ('RokCup', 'ROK Cup'),
@@ -84,21 +85,25 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 
     date = models.DateField(blank=False)
-    time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
-    race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES)
+    time = models.TimeField(blank=False, auto_now=False, auto_now_add=True)
+    race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES, help_text='Choose "none" if this is'
+                                                                                         'a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
     track = models.CharField(blank=False, max_length=200)
-    track_conditions = models.TextField(blank=True, null=True, help_text='Please enter a brief description of the'
+    track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description of the'
                                                                          'track conditions.')
     weather = models.CharField(blank=False, default='sunny', max_length=200, help_text='Sunny, cloudy, rainy, pouring, etc.')
-    temp = models.IntegerField(blank=True, null=True, help_text='Please enter the temperature in Fahrenheit.')
+    temp = models.IntegerField(blank=False, null=True, help_text='Please enter the temperature in Fahrenheit.')
     # air_read = # how to install??
     # gear range might need multiple for shifter karts
     chassis = models.ForeignKey('Chassis', on_delete=models.PROTECT, null=True)
     engine = models.ForeignKey('Engine', on_delete=models.PROTECT, null=True)
     engine_driver_size = models.IntegerField(blank=False, choices=[(r, r) for r in range(10, 14)])
-    sprocket_size = models.IntegerField(blank=False)
+    sprocket_size = models.IntegerField(blank=True, help_text='See below for shifter kart sprocket sizes')
+    sprocket_range = models.CharField(blank=True, help_text='Please enter a sprocket range if running a shifter kart.'
+                                                            'Leave blank otherwise')
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
+    tire_type = models.CharField(blank=False, max_length=200, help_text='Wets or slicks?')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
     high_jetting = models.IntegerField(blank=True, null=True)
     low_jetting = models.IntegerField(blank=True, null=True,
@@ -107,7 +112,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     castor = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     camber = models.DecimalField(blank=True, null=True, max_digits=3, decimal_places=2)
     rear_axle_type = models.CharField(blank=False, null=True, max_length=10,
-                                      help_text='The type of the real axle')
+                                      help_text='The type of the rear axle')
     rear_width = models.IntegerField(blank=True, null=True, help_text='Rear width in mm')
     tire_pressure_fr = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                            help_text='Pressure of the front right tire')
@@ -159,6 +164,8 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                                help_text='Pressure of the rear left tire')
     tire_pressure_rr_hot = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2,
                                                help_text='Pressure of the rear right tire')
+    session_general_notes = models.TextField(blank=True, null=True, help_text='Driver spun, stopped/started raining, '
+                                                                              'should have used bigger sprocket, etc.')
 
     def __str__(self):
         return '-'.join([str(self.date), str(self.time), str(self.track)])
