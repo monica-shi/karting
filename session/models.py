@@ -85,13 +85,13 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 
     date = models.DateField(blank=False)
-    time = models.TimeField(blank=False, auto_now=False, auto_now_add=True)
+    time = models.TimeField(blank=False, auto_now=True, auto_now_add=False)
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES, help_text='Choose "none" if this is'
                                                                                          'a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
     track = models.CharField(blank=False, max_length=200)
-    track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description of the'
-                                                                         'track conditions.')
+    track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description '
+                                                                         'of the track conditions.')
     weather = models.CharField(blank=False, default='sunny', max_length=200, help_text='Sunny, cloudy, rainy, pouring, etc.')
     temp = models.IntegerField(blank=False, null=True, help_text='Please enter the temperature in Fahrenheit.')
     # air_read = # how to install??
@@ -103,7 +103,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     sprocket_range = models.CharField(blank=True, help_text='Please enter a sprocket range if running a shifter kart.'
                                                             'Leave blank otherwise')
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
-    tire_type = models.CharField(blank=False, max_length=200, help_text='Wets or slicks?')
+    tire_type = models.CharField(blank=True, null=True, default='slick', max_length=200, help_text='Wets or slick?')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
     high_jetting = models.IntegerField(blank=True, null=True)
     low_jetting = models.IntegerField(blank=True, null=True,
