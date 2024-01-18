@@ -1,18 +1,17 @@
-
 # Create your views here.
-
-from .models import Chassis, Engine, Session
-from django.shortcuts import render
-from django.views import generic
 
 import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import SessionForm
+from .models import Chassis, Engine, Session
 
 
 def index(request):
@@ -95,7 +94,7 @@ def create_session(request, pk):
     # If this is a GET (or any other method) create the default form.
     else:
         current_date_time = datetime.datetime.now()
-        form = SessionForm(initial={'date': current_date_time.date(), 'time':current_date_time.time()})
+        form = SessionForm(initial={'date': current_date_time.date(), 'time': current_date_time.time()})
 
     context = {
         'form': form,
@@ -105,25 +104,19 @@ def create_session(request, pk):
     return render(request, 'catalog/book_renew_librarian.html', context)
 
 
-
-
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from .models import Chassis, Engine, Session
-from django.contrib.auth.mixins import PermissionRequiredMixin
-
-
 class ChassisCreate(PermissionRequiredMixin, CreateView):
     model = Chassis
     fields = ['brand', 'year', 'model', 'description']
     initial = {'year': datetime.datetime.now().year, 'brand': 'OTK'}
     permission_required = 'session.add_chassis'
 
+
 class ChassisUpdate(PermissionRequiredMixin, UpdateView):
     model = Chassis
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
     permission_required = 'session.change_chassis'
+
 
 class ChassisDelete(PermissionRequiredMixin, DeleteView):
     model = Chassis
