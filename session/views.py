@@ -67,9 +67,10 @@ class SessionDetailView(generic.DetailView):
 
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
-def create_session(request):
+def create_session(request, pk):
     """View function for renewing a specific BookInstance by librarian."""
-    session_instance = Session()
+    session_instance = Session.objects.get(pk=pk)
+    session_instance.pk = None
 
     # If this is a POST request then process the Form data
     if request.method == 'POST':
@@ -145,11 +146,13 @@ class EngineCreate(PermissionRequiredMixin, CreateView):
     # initial = {''}
     permission_required = 'session.add_engine'
 
+
 class EngineUpdate(PermissionRequiredMixin, UpdateView):
     model = Engine
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
     permission_required = 'session.change_engine'
+
 
 class EngineDelete(PermissionRequiredMixin, DeleteView):
     model = Engine
@@ -171,6 +174,38 @@ class SessionCreate(PermissionRequiredMixin, CreateView):
     fields = '__all__'
     initial = {'date': datetime.date.today()}
     permission_required = 'session.add_session'
+
+
+class SessionClone(PermissionRequiredMixin, CreateView):
+    model = Session
+    fields = '__all__'
+    permission_required = 'session.add_session'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        pk = self.kwargs['pk']
+        old_session = Session.objects.get(pk=pk)
+        initial['date'] = datetime.date.today()
+        initial['session_time'] = datetime.datetime.now()
+        initial['race'] = old_session.race
+        initial['session_type'] = old_session.session_type
+        initial['track'] = old_session.track
+        initial['track_conditions'] = old_session.track_conditions
+        initial['weather'] = old_session.weather
+        initial['chassis'] = old_session.chassis
+        initial['engine'] = old_session.engine
+        initial['engine_driver_size'] = old_session.engine_driver_size
+        initial['sprocket_size'] = old_session.sprocket_size
+        initial['tire'] = old_session.tire
+        initial['tire_type'] = old_session.tire_type
+        initial['rim'] = old_session.rim
+        initial['high_jetting'] = old_session.high_jetting
+        initial['low_jetting'] = old_session.low_jetting
+        initial['castor'] = old_session.castor
+        initial['camber'] = old_session.camber
+        initial['rear_axle_type'] = old_session.rear_axle_type
+        initial['rear_width'] = old_session.rear_width
+        return initial
 
 
 class SessionUpdate(PermissionRequiredMixin, UpdateView):

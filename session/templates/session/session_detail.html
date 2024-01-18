@@ -108,6 +108,9 @@
     {% if perms.session.delete_session %}
       <li><a href="{% url 'session-delete' session.id %}">Delete Session</a></li>
     {% endif %}
+    {% if perms.session.add_session %}
+      <li><a href="{% url 'session-clone' session.id %}">Clone Session</a></li>
+    {% endif %}
   </ul>
   {% endif %}
 

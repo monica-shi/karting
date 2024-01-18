@@ -11,8 +11,12 @@
         <a href="{% url 'session-update' session.id %}">Update Session</a>
         {% endif %}
         {% if perms.session.delete_session %}
-        <a href="{% url 'session-delete' session.id %}">Delete Session</a></li>
+        <a href="{% url 'session-delete' session.id %}">Delete Session</a>
         {% endif %}
+        {% if perms.session.create_session %}
+        <a href="{% url 'session-clone' session.id %}">Clone Session</a>
+        {% endif %}
+      </li>
       {% endfor %}
     </ul>
   {% else %}
