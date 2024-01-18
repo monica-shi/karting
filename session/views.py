@@ -216,7 +216,7 @@ class SessionUpdate(PermissionRequiredMixin, UpdateView):
 
 
 class SessionDelete(PermissionRequiredMixin, DeleteView):
-    model = Chassis
+    model = Session
     success_url = reverse_lazy('session')
     permission_required = 'session.delete_session'
 
