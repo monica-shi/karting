@@ -85,7 +85,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 
     date = models.DateField(blank=False)
-    session_time = models.TimeField(blank=False, auto_now=True, auto_now_add=False)
+    session_time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES, help_text='Choose "none" if this is'
                                                                                          'a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
@@ -168,7 +168,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                                                               'should have used bigger sprocket, etc.')
 
     def __str__(self):
-        return '-'.join([str(self.date), str(self.session_time), str(self.track)])
+        return '-'.join([str(self.date), str(self.session_time.strftime('%H:%M:%S')), str(self.race), str(self.track)])
 
     def get_absolute_url(self):
         return reverse('session-detail', args=[str(self.id)])

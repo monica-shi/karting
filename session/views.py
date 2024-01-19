@@ -56,6 +56,7 @@ class EngineDetailView(generic.DetailView):
 
 class SessionListView(generic.ListView):
     model = Session
+    queryset = Session.objects.order_by('-date', '-session_time')
     context_object_name = 'session_list'
     paginate_by = 10
 
