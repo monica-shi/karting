@@ -3,23 +3,32 @@
 {% block content %}
   <h1>Session List</h1>
   {% if session_list %}
-    <ul>
+    <div class="container-fluid text-left">
       {% for session in session_list %}
-      <li>
-        <a href="{{ session.get_absolute_url }}">{{ session }}</a>
+      <div class="row">
+        <hr>
+        <div class="col-6">
+          <a href="{{ session.get_absolute_url }}">{{ session }}</a>
+        </div>
         {% if perms.session.change_session %}
-        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'session-update' session.id %}'">Update Session</button>
+        <div class="col">
+          <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'session-update' session.id %}'">Update Session</button>
+        </div>
         {% endif %}
         {% if perms.session.create_session %}
-        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'session-clone' session.id %}'">Clone Session</button>
+        <div class="col">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'session-clone' session.id %}'">Clone Session</button>
+        </div>
         {% endif %}
         {% if perms.session.delete_session %}
-        <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'session-delete' session.id %}'">Delete Session</button>
+        <div class="col">
+          <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'session-delete' session.id %}'">Delete Session</button>
+        </div>
         {% endif %}
-      </li>
+      </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <p>There are no engines in the database.</p>
+    <p>There are no sessions in the database.</p>
   {% endif %}
 {% endblock %}
