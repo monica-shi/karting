@@ -32,49 +32,42 @@
                 <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
                 {% endif %}
             </ul>
+
+            {% if user.is_staff %}
+            <ul class="sidebar-nav">
+                <li>Staff</li>
+                {% if perms.session.add_chassis %}
+                <li><a href="{% url 'chassis-create' %}">Add a chassis</a></li>
+                {% endif %}
+                {% if perms.session.add_engine %}
+                <li><a href="{% url 'engine-create' %}">Add an engine</a></li>
+                {% endif %}
+                {% if perms.session.add_session %}
+                <li><a href="{% url 'session-create' %}">Add a session</a></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
             {% endblock %}
         </div>
-        <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-        {% block pagination %}
-        {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        <div class="col-sm-10 ">
+            {% block content %}{% endblock %}
+            {% block pagination %}
+            {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
                 </span>
-                {% if page_obj.has_next %}
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
+            </div>
         </div>
-        {% endif %}
-
-        {% if user.is_staff %}
-        <ul class="sidebar-nav">
-            <li>Staff</li>
-            {% if perms.session.add_chassis %}
-            <li><a href="{% url 'chassis-create' %}">Add a chassis</a></li>
-            {% endif %}
-        </ul>
-        {% endif %}
-
-         {% if user.is_staff %}
-        <ul class="sidebar-nav">
-            {% if perms.session.add_engine %}
-            <li><a href="{% url 'engine-create' %}">Add an engine</a></li>
-            {% endif %}
-        </ul>
-        {% endif %}
-
-         {% if user.is_staff %}
-        <ul class="sidebar-nav">
-            {% if perms.session.add_session %}
-            <li><a href="{% url 'session-create' %}">Add a session</a></li>
-            {% endif %}
-        </ul>
         {% endif %}
 
         {% endblock %}
