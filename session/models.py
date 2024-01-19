@@ -168,7 +168,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                                                               'should have used bigger sprocket, etc.')
 
     def __str__(self):
-        return '-'.join([str(self.date), str(self.session_time.strftime('%H:%M:%S')), str(self.race), str(self.track)])
+        return ' '.join([str(self.date), str(self.session_time.strftime('%H:%M:%S')), str(self.race), str(self.track)])
 
     def get_absolute_url(self):
         return reverse('session-detail', args=[str(self.id)])
