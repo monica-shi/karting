@@ -1,9 +1,8 @@
-from django.db import models
-from django.urls import reverse
-from django.contrib.auth.models import User
-
 import datetime
 
+from django.db import models
+from django.urls import reverse
+from django.conf import settings
 
 BRAND_CHOICES = {
     ('Tony Kart', 'Tony Kart'),
@@ -17,7 +16,7 @@ BRAND_CHOICES = {
 
 
 def year_choices():
-    return [(r, r) for r in range(2010, datetime.date.today().year+1)]
+    return [(r, r) for r in range(2010, datetime.date.today().year + 1)]
 
 
 def current_year():
@@ -27,7 +26,7 @@ def current_year():
 class Chassis(models.Model):
     """Model representing a chassis"""
     brand = models.CharField(blank=False, choices=BRAND_CHOICES, max_length=200)
-    year = models.IntegerField(blank=True, null=True,choices=year_choices(), default=current_year(),
+    year = models.IntegerField(blank=True, null=True, choices=year_choices(), default=current_year(),
                                help_text='Enter the year the chassis model came out.')
     model = models.CharField(blank=True, null=True, max_length=200, help_text='Enter prototype, if applicable')
     description = models.TextField(blank=True, null=True, help_text='Enter a description of how this '
@@ -49,6 +48,7 @@ class Engine(models.Model):
                                 help_text='Enter a nickname to help quickly identify '
                                           'specific engine')
     serial_num = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         if self.nickname:
@@ -92,7 +92,8 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     track = models.CharField(blank=False, max_length=200)
     track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description '
                                                                          'of the track conditions.')
-    weather = models.CharField(blank=False, default='sunny', max_length=200, help_text='Sunny, cloudy, rainy, pouring, etc.')
+    weather = models.CharField(blank=False, default='sunny', max_length=200,
+                               help_text='Sunny, cloudy, rainy, pouring, etc.')
     temp = models.IntegerField(blank=False, null=True, help_text='Please enter the temperature in Fahrenheit.')
     # air_read = # how to install??
     # gear range might need multiple for shifter karts
