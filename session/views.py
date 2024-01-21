@@ -163,16 +163,19 @@ class EngineDelete(PermissionRequiredMixin, DeleteView):
             )
 
 
-class SessionCreate(PermissionRequiredMixin, CreateView):
+class SessionCreationView(CreateView):
     model = Session
-    fields = '__all__'
+    form_class = SessionForm
+
+
+class SessionCreate(PermissionRequiredMixin, SessionCreationView):
+    model = Session
     initial = {'date': datetime.date.today(), 'session_time': datetime.datetime.now()}
     permission_required = 'session.add_session'
 
 
-class SessionClone(PermissionRequiredMixin, CreateView):
+class SessionClone(PermissionRequiredMixin, SessionCreationView):
     model = Session
-    fields = '__all__'
     permission_required = 'session.add_session'
 
     def get_initial(self):
@@ -202,10 +205,14 @@ class SessionClone(PermissionRequiredMixin, CreateView):
         return initial
 
 
-class SessionUpdate(PermissionRequiredMixin, UpdateView):
+class SessionUpdateView(UpdateView):
+    model = Session
+    form_class = SessionForm
+
+
+class SessionUpdate(PermissionRequiredMixin, SessionUpdateView):
     model = Session
     # Not recommended (potential security issue if more fields added)
-    fields = '__all__'
     permission_required = 'session.change_session'
 
 
