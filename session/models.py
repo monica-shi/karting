@@ -31,6 +31,7 @@ class Chassis(models.Model):
     model = models.CharField(blank=True, null=True, max_length=200, help_text='Enter prototype, if applicable')
     description = models.TextField(blank=True, null=True, help_text='Enter a description of how this '
                                                                     'chassis behaves.')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
         return str(self.brand) + "-" + str(self.year) + '-' + str(self.model)
@@ -48,7 +49,7 @@ class Engine(models.Model):
                                 help_text='Enter a nickname to help quickly identify '
                                           'specific engine')
     serial_num = models.IntegerField(blank=True, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
         if self.nickname:
@@ -83,6 +84,8 @@ SESSION_TYPES = {
 
 class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     date = models.DateField(blank=False)
     session_time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
