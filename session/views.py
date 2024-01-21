@@ -166,7 +166,7 @@ class EngineDelete(PermissionRequiredMixin, DeleteView):
 class SessionCreate(PermissionRequiredMixin, CreateView):
     model = Session
     fields = '__all__'
-    initial = {'date': datetime.date.today()}
+    initial = {'date': datetime.date.today(), 'session_time': datetime.datetime.now()}
     permission_required = 'session.add_session'
 
 

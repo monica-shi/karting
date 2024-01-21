@@ -81,8 +81,8 @@ WSGI_APPLICATION = "karting.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'karting',
-        'USER': 'karting',
+        'NAME': 'karting_dev',
+        'USER': 'karting_dev',
         'PASSWORD': 'Sh1Family!',
         'HOST': 'karting-test.cm4m9ic6mmhq.us-east-2.rds.amazonaws.com',
         'PORT': '5432'
