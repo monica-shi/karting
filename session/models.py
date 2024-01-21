@@ -89,8 +89,8 @@ class Session(models.Model):  # make sure blank=True for necessary fields
 
     date = models.DateField(blank=False)
     session_time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
-    race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES, help_text='Choose "none" if this is'
-                                                                                         'a practice weekend')
+    race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES,
+                            help_text='Choose "none" if this is a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
     track = models.CharField(blank=False, max_length=200)
     track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description '
