@@ -13,7 +13,7 @@
           {% if perms.session.change_session %}
             <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'session-update' session.id %}'">Update Session</button>
           {% endif %}
-          {% if perms.session.create_session %}
+          {% if perms.session.add_session %}
             <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'session-clone' session.id %}'">Clone Session</button>
           {% endif %}
           {% if perms.session.delete_session %}
