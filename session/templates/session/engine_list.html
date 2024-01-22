@@ -13,9 +13,6 @@
           {% if perms.session.change_engine %}
             <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'engine-update' engine.id %}'">Update Engine</button>
           {% endif %}
-          {% if perms.session.create_engine %}
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{%url 'engine-clone' engine.id %}'">Update Engine</button>
-          {% endif %}
           {% if perms.session.delete_engine %}
             <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'engine-delete' engine.id %}'">Update Engine</button>
           {% endif %}
