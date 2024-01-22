@@ -11,15 +11,19 @@
 
   {% if perms.session.change_chassis or perms.session.delete_chassis %}
   <hr>
-  <ul class="sidebar-nav">
-    {% if perms.session.change_chassis %}
-      <li><a href="{% url 'chassis-update' chassis.id %}">Update Chassis</a></li>
-    {% endif %}
-    {% if perms.session.delete_chassis %}
-      <li><a href="{% url 'chassis-delete' chassis.id %}">Delete Chassis</a></li>
-    {% endif %}
-  </ul>
-  {% endif %}
+  <div class="row">
+    <div class="col-sm-auto">
+      {% if perms.session.change_chassis %}
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'chassis-update' chassis.id %}'">Update Chassis</button>
+      {% endif %}
+      {% if perms.session.delete_chassis %}
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'chassis-delete' chassis.id %}'">Delete Chassis</button>
+      {% endif %}
+    </div>
+    <hr>
+  </div>
 
+
+  {% endif %}
 
 {% endblock %}
