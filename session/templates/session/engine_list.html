@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <br>
   <h1>Engine List</h1>
+  <br>
   {% if engine_list %}
     <div class="container-fluid text-left">
       {% for engine in engine_list %}
@@ -11,10 +13,10 @@
         </div>
         <div class="col-sm-auto">
           {% if perms.session.change_engine %}
-            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'engine-update' engine.id %}'">Update Engine</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'engine-update' engine.id %}'">Update</button>
           {% endif %}
           {% if perms.session.delete_engine %}
-            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'engine-delete' engine.id %}'">Delete Engine</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'engine-delete' engine.id %}'">Delete</button>
           {% endif %}
         </div>
         <hr>
