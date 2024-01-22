@@ -33,9 +33,10 @@
                 {% endif %}
             </ul>
 
-            {% if user.is_staff %}
             <ul class="sidebar-nav">
+                {% if user.is_staff %}
                 <li>Staff</li>
+                {% endif %}
                 {% if perms.session.add_chassis %}
                 <li><a href="{% url 'chassis-create' %}">Add a chassis</a></li>
                 {% endif %}
@@ -46,7 +47,6 @@
                 <li><a href="{% url 'session-create' %}">Add a session</a></li>
                 {% endif %}
             </ul>
-            {% endif %}
 
             {% endblock %}
         </div>

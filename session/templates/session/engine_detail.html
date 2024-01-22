@@ -2,11 +2,11 @@
 
 {% block content %}
   <br>
-  <h1>Title: {{ engine.manufacturer }}</h1>
-
+  <p><strong>Manufacturer:</strong> {{ engine.manufacturer }}</p>
   <p><strong>Model:</strong> <a href="">{{ engine.model }}</a></p>
   <p><strong>Nickname:</strong> {{ engine.nickname }}</p>
   <p><strong>Serial Number:</strong> {{ engine.serial_num }}</p>
+  <p><strong>Created by:</strong> {{ engine.user }} </p>
 
   {% if perms.session.change_engine or perms.session.delete_engine %}
   <hr>

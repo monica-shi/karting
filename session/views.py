@@ -34,34 +34,48 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
-class ChassisListView(generic.ListView):
+class UserFilteredListView(generic.ListView):
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(user=self.request.user.id)
+
+
+class UserFilteredDetailView(generic.DetailView):
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(user=self.request.user.id)
+
+
+class ChassisListView(UserFilteredListView):
     model = Chassis
     context_object_name = 'chassis_list'
     paginate_by = 10
 
 
-class ChassisDetailView(generic.DetailView):
+class ChassisDetailView(UserFilteredDetailView):
     model = Chassis
 
 
-class EngineListView(generic.ListView):
+class EngineListView(UserFilteredListView):
     model = Engine
     context_object_name = 'engine_list'
     paginate_by = 10
 
 
-class EngineDetailView(generic.DetailView):
+class EngineDetailView(UserFilteredDetailView):
     model = Engine
 
 
-class SessionListView(generic.ListView):
+class SessionListView(UserFilteredListView):
     model = Session
-    queryset = Session.objects.order_by('-date', '-session_time')
     context_object_name = 'session_list'
     paginate_by = 10
 
+    def get_queryset(self, **kwargs):
+        return super().get_queryset(**kwargs).order_by('-date', '-session_time')
 
-class SessionDetailView(generic.DetailView):
+
+class SessionDetailView(UserFilteredDetailView):
     model = Session
 
 
@@ -163,16 +177,19 @@ class EngineDelete(PermissionRequiredMixin, DeleteView):
             )
 
 
-class SessionCreate(PermissionRequiredMixin, CreateView):
+class SessionCreationView(CreateView):
     model = Session
-    fields = '__all__'
-    initial = {'date': datetime.date.today()}
+    form_class = SessionForm
+
+
+class SessionCreate(PermissionRequiredMixin, SessionCreationView):
+    model = Session
+    initial = {'date': datetime.date.today(), 'session_time': datetime.datetime.now()}
     permission_required = 'session.add_session'
 
 
-class SessionClone(PermissionRequiredMixin, CreateView):
+class SessionClone(PermissionRequiredMixin, SessionCreationView):
     model = Session
-    fields = '__all__'
     permission_required = 'session.add_session'
 
     def get_initial(self):
@@ -202,10 +219,14 @@ class SessionClone(PermissionRequiredMixin, CreateView):
         return initial
 
 
-class SessionUpdate(PermissionRequiredMixin, UpdateView):
+class SessionUpdateView(UpdateView):
+    model = Session
+    form_class = SessionForm
+
+
+class SessionUpdate(PermissionRequiredMixin, SessionUpdateView):
     model = Session
     # Not recommended (potential security issue if more fields added)
-    fields = '__all__'
     permission_required = 'session.change_session'
 
 

@@ -23,7 +23,7 @@ class SessionAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('date', 'time'), 'race', 'track', 'track_conditions', 'weather', 'temp')
+            'fields': (('date', 'session_time'), 'race', 'track', 'track_conditions', 'weather', 'temp')
         }),
         ('Kart Setup', {
             'fields': (('chassis', 'engine', 'carburetor'),
