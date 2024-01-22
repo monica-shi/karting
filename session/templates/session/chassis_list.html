@@ -13,9 +13,6 @@
           {% if perms.session.change_chassis %}
             <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'chassis-update' chassis.id %}'">Update Chassis</button>
           {% endif %}
-          {% if perms.session.create_chassis %}
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{%url 'chassis-clone' chassis.id %}'">Update Chassis</button>
-          {% endif %}
           {% if perms.session.delete_chassis %}
             <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'chassis-delete' chassis.id %}'">Update Chassis</button>
           {% endif %}
