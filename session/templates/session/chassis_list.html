@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <br>
   <h1>Chassis List</h1>
+  <br>
   {% if chassis_list %}
     <div class="container-fluid text-left">
       {% for chassis in chassis_list %}
@@ -11,10 +13,10 @@
         </div>
         <div class="col-sm-auto">
           {% if perms.session.change_chassis %}
-            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'chassis-update' chassis.id %}'">Update Chassis</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'chassis-update' chassis.id %}'">Update</button>
           {% endif %}
           {% if perms.session.delete_chassis %}
-            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'chassis-delete' chassis.id %}'">Delete Chassis</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'chassis-delete' chassis.id %}'">Delete</button>
           {% endif %}
         </div>
         <hr>

@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+  <br>
   <h1>Session List</h1>
+  <br>
   {% if session_list %}
     <div class="container-fluid text-left">
       {% for session in session_list %}
@@ -11,13 +13,13 @@
         </div>
         <div class="col-sm-auto">
           {% if perms.session.change_session %}
-            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'session-update' session.id %}'">Update Session</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'session-update' session.id %}'">Update</button>
           {% endif %}
           {% if perms.session.create_session %}
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'session-clone' session.id %}'">Clone Session</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{% url 'session-clone' session.id %}'">Clone</button>
           {% endif %}
           {% if perms.session.delete_session %}
-            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'session-delete' session.id %}'">Delete Session</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'session-delete' session.id %}'">Delete</button>
           {% endif %}
         </div>
         <hr>
