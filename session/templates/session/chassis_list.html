@@ -3,18 +3,27 @@
 {% block content %}
   <h1>Chassis List</h1>
   {% if chassis_list %}
-    <ul>
+    <div class="container-fluid text-left">
       {% for chassis in chassis_list %}
-      <li>
-        <a href="{{ chassis.get_absolute_url }}">{{ chassis }}</a>
-        {% if perms.session.change_chassis %}
-        <a href="{% url 'chassis-update' chassis.id %}">Update Chassis</a>
-        {% endif %}
-        {% if perms.session.delete_chassis %}
-        <a href="{% url 'chassis-delete' chassis.id %}">Delete Chassis</a></li>
-        {% endif %}
+      <div class="row">
+        <div class="col-sm">
+          <a href="{{ chassis.get_absolute_url }}">{{ chassis }}</a>
+        </div>
+        <div class="col-sm-auto">
+          {% if perms.session.change_chassis %}
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'chassis-update' chassis.id %}'">Update Chassis</button>
+          {% endif %}
+          {% if perms.session.create_chassis %}
+            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='{%url 'chassis-clone' chassis.id %}'">Update Chassis</button>
+          {% endif %}
+          {% if perms.session.delete_chassis %}
+            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'chassis-delete' chassis.id %}'">Update Chassis</button>
+          {% endif %}
+        </div>
+        <hr>
+      </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <p>There are no chassis in the database.</p>
   {% endif %}
