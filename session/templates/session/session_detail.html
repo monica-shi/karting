@@ -4,28 +4,24 @@
   <br>
   <h1>{{ session.race }} ---- {{ session.session_type }} ---- {{session.date}} ---- {{session.session_time}}</h1>
 
-  <ul>
-    <li><strong>Track:</strong> {{ session.track }}</li>
-    <li><strong>Track Conditions:</strong> {{ session.track_conditions }}</li>
-    <li><strong>Chassis:</strong> <a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></li>
-    <li><strong>Engine:</strong> <a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></li>
-    <li><strong>Weather:</strong> {{ session.weather }} </li>
-    <li><strong>Track temperature:</strong> {{ session.temp }} </li>
-    <li><strong>Engine driver size:</strong> {{ session.engine_driver_size }}</li>
-    <li><strong>Sprocket size:</strong> {{ session.sprocket_size }}</li>
-    <li><strong>Tire:</strong> {{ session.tire }}</li>
-    <li><strong>Rim:</strong> {{ session.rim }}</li>
-    <li><strong>Low jetting for Tillotson carb or main jet size for Dellorto carb:</strong> {{ session.low_jetting }}</li>
-    <li><strong>High jetting:</strong> {{ session.high_jetting }}</li>
-    <li><strong>Castor:</strong> {{ session.castor }}</li>
-    <li><strong>Camber:</strong> {{ session.camber }}</li>
-    <li><strong>Rear Axle:</strong> {{ session.rear_axle_type }}</li>
-    <li><strong>Rear Width:</strong> {{ session.rear_width }}</li>
-    <li><strong>Tire pressure front right:</strong> {{ session.tire_pressure_fr }}</li>
-    <li><strong>Tire pressure front left:</strong> {{ session.tire_pressure_fl }}</li>
-    <li><strong>Tire pressure rear left:</strong> {{ session.tire_pressure_rl }}</li>
-    <li><strong>Tire pressure rear right:</strong> {{ session.tire_pressure_rr }}</li>
-  </ul>
+  <table>
+    <tr><td width="30%"><strong>Track:</strong></td><td width="1px"></td> <td width="70%"> {{ session.track }} </td></tr>
+    <tr><td width="30%"><strong>Track condition:</strong></td><td width="1px"></td> <td width="70%"> {{ session.track_conditions }} </td></tr>
+    <tr><td width="30%"><strong>Chassis:</strong></td><td width="1px"></td> <td width="70%"><a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></td></tr>
+    <tr><td width="30%"><strong>Engine:</strong></td><td width="1px"></td> <td width="70%"><a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></td></tr>
+    <tr><td width="30%"><strong>Weather:</strong></td><td width="1px"></td> <td width="70%">{{ session.weather }} </td></tr>
+    <tr><td width="30%"><strong>Track temperature:</strong></td><td width="1px"></td> <td width="70%">{{ session.temp }} </td></tr>
+    <tr><td width="30%"><strong>Engine driver size:</strong></td><td width="1px"></td> <td width="70%">{{ session.engine_driver_size }}</td></tr>
+    <tr><td width="30%"><strong>Sprocket size:</strong></td><td width="1px"></td> <td width="70%">{{ session.sprocket_size }}</td></tr>
+    <tr><td width="30%"><strong>Tire:</strong></td><td width="1px"></td> <td width="70%">{{ session.tire }}</td></tr>
+    <tr><td width="30%"><strong>Rim:</strong></td><td width="1px"></td> <td width="70%">{{ session.rim }}</td></tr>
+    <tr><td width="30%"><strong>Low/main jetting:</strong></td><td width="1px"></td> <td width="70%">{{ session.low_jetting }}</td></tr>
+    <tr><td width="30%"><strong>High jetting:</strong></td><td width="1px"></td> <td width="70%">{{ session.high_jetting }}</td></tr>
+    <tr><td width="30%"><strong>Castor:</strong></td><td width="1px"></td> <td width="70%">{{ session.castor }}</td></tr>
+    <tr><td width="30%"><strong>Camber:</strong></td><td width="1px"></td> <td width="70%">{{ session.camber }}</td></tr>
+    <tr><td width="30%"><strong>Rear Axle:</strong></td><td width="1px"></td> <td width="70%">{{ session.rear_axle_type }}</td></tr>
+    <tr><td width="30%"><strong>Rear Width:</strong></td><td width="1px"></td> <td width="70%">{{ session.rear_width }}</td></tr>
+  </table>
 
   <div class="container-fluid text-right" style="margin-top:50px;">
     <div class="row">
