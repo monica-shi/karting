@@ -17,9 +17,9 @@ from .models import Chassis, Engine, Session
 def index(request):
     """View function for home page of site."""
 
-    num_chassis = Chassis.objects.count()
-    num_engines = Engine.objects.count()
-    num_sessions = Session.objects.count()
+    num_chassis = Chassis.objects.filter(user=request.user.id).count()
+    num_engines = Engine.objects.filter(user=request.user.id).count()
+    num_sessions = Session.objects.filter(user=request.user.id).count()
 
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
