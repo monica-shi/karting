@@ -13,7 +13,9 @@ class AuthRequiredMiddleware(object):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
 
-        if not request.user.is_authenticated and resolve(request.path).view_name != 'login':
+        if (not request.user.is_authenticated
+                and resolve(request.path).view_name != 'login'
+                and resolve(request.path).view_name != 'signup'):
             return HttpResponseRedirect(reverse_lazy('login'))  # or http response
 
         response = self.get_response(request)
