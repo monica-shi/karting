@@ -67,6 +67,16 @@ class Engine(models.Model):
         return reverse('engine-detail', args=[str(self.id)])
 
 
+class Track(models.Model):
+    name = models.CharField(blank=False, null=False, max_length=100,
+                            help_text='The name of the track')
+    country = models.CharField(blank=False, null=False, max_length=50, help_text='The country of the track')
+    website = models.URLField(null=True)
+
+    def __str__(self):
+        return self.name
+
+
 RACE_CHOICES = {
     ('None', 'None'),
     ('SKUSA', 'Super Karts USA'),
@@ -98,7 +108,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES,
                             help_text='Choose "none" if this is a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
-    track = models.CharField(blank=False, max_length=200)
+    track = models.ForeignKey('Track', on_delete=models.PROTECT, null=False)
     track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description '
                                                                          'of the track conditions.')
     weather = models.CharField(blank=False, default='sunny', max_length=200,

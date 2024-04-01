@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chassis, Engine, Session
+from .models import Chassis, Engine, Track, Session
 
 
 # Register your models here.
@@ -13,6 +13,11 @@ class ChassisAdmin(admin.ModelAdmin):
 @admin.register(Engine)
 class EngineAdmin(admin.ModelAdmin):
     list_display = ('manufacturer', 'model', 'nickname', 'serial_num')
+
+
+@admin.register(Track)
+class EngineAdmin(admin.ModelAdmin):
+    list_display = ('name', 'country', 'website')
 
 
 # are inlines/tubularline needed here?
