@@ -12,6 +12,11 @@ BRAND_CHOICES = {
     ('SODI', 'SODI Kart'),
     ('CompKart', 'CompKart'),
     ('BirelArt', 'BirelArt'),
+    ('Parolin', 'Parolin'),
+    ('EnergyKart', 'Energy Kart'),
+    ('LandoNorrisKart', 'Lando Norris Kart'),
+    ('CRG', 'CRG'),
+    ('Arrow', 'Arrow Racing Karts'),
 }
 
 
