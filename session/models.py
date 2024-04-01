@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
-BRAND_CHOICES = {
+BRAND_CHOICES = [
     ('Tony Kart', 'Tony Kart'),
     ('Kosmic', 'Kosmic'),
     ('Red Speed', 'Red Speed'),
@@ -17,7 +17,8 @@ BRAND_CHOICES = {
     ('LandoNorrisKart', 'Lando Norris Kart'),
     ('CRG', 'CRG'),
     ('Arrow', 'Arrow Racing Karts'),
-}
+]
+BRAND_CHOICES.sort()
 
 
 def year_choices():
