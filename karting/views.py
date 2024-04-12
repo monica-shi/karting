@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from .forms import SignupForm
 
 
@@ -7,7 +9,7 @@ def user_signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return HttpResponseRedirect(reverse_lazy('login'))
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
