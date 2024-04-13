@@ -2,10 +2,10 @@
 
 {% block content %}
   <br>
-  <p><strong>Manufacturer:</strong> {{ track.name }}</p>
-  <p><strong>Model:</strong> <a href="">{{ track.country }}</a></p>
+  <p><strong>Track Name:</strong> {{ track.name }}</p>
+  <p><strong>Country:</strong> {{ track.country }}</p>
   <p><strong>Created by:</strong> {{ track.created_by }} </p>
-  <p><strong>Nickname:</strong> {{ track.website }}</p>
+  <p><strong>Website:</strong> <a href="">{{ track.website }}</a></p>
 
   {% if perms.session.change_track or perms.session.delete_track %}
   <hr>
