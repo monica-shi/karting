@@ -125,6 +125,11 @@ class ChassisCreate(PermissionRequiredMixin, CreateView):
     initial = {'year': datetime.datetime.now().year, 'brand': 'OTK'}
     permission_required = 'session.add_chassis'
 
+    def form_valid(self, form):
+        chassis = form.save(commit=False)
+        chassis.user = self.request.user
+        return super().form_valid(form)
+
 
 class ChassisUpdate(PermissionRequiredMixin, UpdateView):
     model = Chassis
@@ -153,6 +158,11 @@ class EngineCreate(PermissionRequiredMixin, CreateView):
     fields = ['manufacturer', 'model', 'nickname', 'serial_num']
     # initial = {''}
     permission_required = 'session.add_engine'
+
+    def form_valid(self, form):
+        engine = form.save(commit=False)
+        engine.user = self.request.user
+        return super().form_valid(form)
 
 
 class EngineUpdate(PermissionRequiredMixin, UpdateView):
