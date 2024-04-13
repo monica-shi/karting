@@ -223,6 +223,8 @@ class SessionCreate(PermissionRequiredMixin, SessionCreationView):
         model_form = super().get_form_class()
         # Users can only see the tracks they added, or those added by user 'karting'
         model_form.base_fields['track'].limit_choices_to = Q(created_by=self.request.user) | Q(created_by_id=1)
+        model_form.base_fields['chassis'].limit_choices_to = Q(user=self.request.user)
+        model_form.base_fields['engine'].limit_choices_to = Q(user=self.request.user)
         return model_form
 
 
