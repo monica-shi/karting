@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <br>
+  <p><strong>Manufacturer:</strong> {{ track.name }}</p>
+  <p><strong>Model:</strong> <a href="">{{ track.country }}</a></p>
+  <p><strong>Created by:</strong> {{ track.created_by }} </p>
+  <p><strong>Nickname:</strong> {{ track.website }}</p>
+
+  {% if perms.session.change_track or perms.session.delete_track %}
+  <hr>
+  <div class="row">
+    <div class="col-sm-auto">
+      {% if perms.session.change_track %}
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{% url 'track-update' track.id %}'">Update track</button>
+      {% endif %}
+      {% if perms.session.delete_track %}
+        <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{% url 'track-delete' track.id %}'">Delete track</button>
+      {% endif %}
+    </div>
+    <hr>
+  </div>
+
+
+  {% endif %}
+
+{% endblock %}
+

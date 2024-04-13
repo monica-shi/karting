@@ -77,6 +77,9 @@ class Track(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('track-detail', args=[str(self.id)])
+
 
 RACE_CHOICES = {
     ('None', 'None'),
@@ -109,7 +112,9 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES,
                             help_text='Choose "none" if this is a practice weekend')
     session_type = models.CharField(blank=False, null=False, default='Practice', max_length=20, choices=SESSION_TYPES)
-    track = models.ForeignKey('Track', on_delete=models.PROTECT, null=False)
+    track = models.ForeignKey('Track', on_delete=models.PROTECT, null=False,
+                              help_text='You can see the tracks you added together with '
+                                        'those added by the administrator')
     track_conditions = models.TextField(blank=True, null=True, help_text='(Optional) Please enter a brief description '
                                                                          'of the track conditions.')
     weather = models.CharField(blank=False, default='sunny', max_length=200,

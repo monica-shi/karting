@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <br>
+  <h1>Track List</h1>
+  <br>
+  {% if track_list %}
+    <div class="container-fluid text-left">
+      {% for track in track_list %}
+      <div class="row">
+        <div class="col-sm">
+          <a href="{{ track.get_absolute_url }}">{{ track }}</a>
+        </div>
+        <div class="col-sm-auto">
+          {% if perms.session.change_track %}
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='{%url 'track-update' track.id %}'">Update</button>
+          {% endif %}
+          {% if perms.session.delete_track %}
+            <button type="button" class="btn btn-danger btn-sm" onclick="location.href='{%url 'track-delete' track.id %}'">Delete</button>
+          {% endif %}
+        </div>
+        <hr>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>There is no track in the database.</p>
+  {% endif %}
+{% endblock %}

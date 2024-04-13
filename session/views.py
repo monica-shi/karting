@@ -4,7 +4,7 @@ import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 
 from .forms import SessionForm
-from .models import Chassis, Engine, Session
+from .models import Chassis, Engine, Session, Track
 
 
 def index(request):
@@ -78,46 +78,6 @@ class SessionListView(UserFilteredListView):
 
 class SessionDetailView(UserFilteredDetailView):
     model = Session
-
-
-@login_required
-@permission_required('catalog.can_mark_returned', raise_exception=True)
-def create_session(request, pk):
-    """View function for renewing a specific BookInstance by librarian."""
-    session_instance = Session.objects.get(pk=pk)
-    session_instance.pk = None
-
-    # If this is a POST request then process the Form data
-    if request.method == 'POST':
-
-        # Create a form instance and populate it with data from the request (binding):
-        form = SessionForm(request.POST)
-
-        # Check if the form is valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-            session_instance.due_back = form.cleaned_data['renewal_date']
-            session_instance.date = form.cleaned_data['date']
-            session_instance.time = form.cleaned_data['time']
-            session_instance.track = form.cleaned_data['track']
-            session_instance.chassis = form.cleaned_data['chassis']
-            session_instance.engine = form.cleaned_data['engine']
-            session_instance.save()
-
-            # redirect to a new URL: (homepage)
-            return HttpResponseRedirect(reverse('SessionListView'))
-
-    # If this is a GET (or any other method) create the default form.
-    else:
-        current_date_time = datetime.datetime.now()
-        form = SessionForm(initial={'date': current_date_time.date(), 'time': current_date_time.time()})
-
-    context = {
-        'form': form,
-        'session_instance': session_instance,
-    }
-
-    return render(request, 'catalog/book_renew_librarian.html', context)
 
 
 class ChassisCreate(PermissionRequiredMixin, CreateView):
@@ -188,9 +148,70 @@ class EngineDelete(PermissionRequiredMixin, DeleteView):
             )
 
 
+class TrackListView(generic.ListView):
+    model = Track
+    context_object_name = 'track_list'
+    paginate_by = 10
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(Q(created_by_id=self.request.user.id) | Q(created_by_id=1))
+
+
+class TrackDetailView(generic.DetailView):
+    model = Track
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(Q(created_by_id=self.request.user.id) | Q(created_by_id=1))
+
+
 class SessionCreationView(CreateView):
     model = Session
     form_class = SessionForm
+
+
+class TrackCreate(PermissionRequiredMixin, CreateView):
+    model = Track
+    fields = ['name', 'country', 'website']
+    permission_required = 'session.add_track'
+
+    def form_valid(self, form):
+        track = form.save(commit=False)
+        track.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class TrackUpdate(PermissionRequiredMixin, UpdateView):
+    model = Track
+    # Not recommended (potential security issue if more fields added)
+    fields = ['name', 'country', 'website']
+    permission_required = 'session.change_track'
+
+    def form_valid(self, form):
+        track = form.save(commit=False)
+        if track.created_by != self.request.user:
+            return HttpResponseBadRequest("You are not allowed to change a track created by another person")
+        else:
+            return super().form_valid(form)
+
+
+class TrackDelete(PermissionRequiredMixin, DeleteView):
+    model = Track
+    success_url = reverse_lazy('track')
+    permission_required = 'session.delete_track'
+
+    def form_valid(self, form):
+        try:
+            if self.object.created_by != self.request.user:
+                return HttpResponseBadRequest("You are not allowed to delete a track created by another person")
+            else:
+                self.object.delete()
+                return HttpResponseRedirect(self.success_url)
+        except Exception as e:
+            return HttpResponseServerError(
+                'Server error: %s'.format(e)
+            )
 
 
 class SessionCreate(PermissionRequiredMixin, SessionCreationView):
@@ -200,6 +221,7 @@ class SessionCreate(PermissionRequiredMixin, SessionCreationView):
 
     def get_form_class(self):
         model_form = super().get_form_class()
+        # Users can only see the tracks they added, or those added by user 'karting'
         model_form.base_fields['track'].limit_choices_to = Q(created_by=self.request.user) | Q(created_by_id=1)
         return model_form
 

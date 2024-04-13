@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<br>
+<h1>Delete Track: {{ engine }}</h1>
+
+<p>Are you sure you want to delete the track?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" class="btn btn-secondary" value="Yes, delete.">
+  <button type="button" class="btn btn-primary" onclick="window.history.back();">No, go back.</button>
+</form>
+
+{% endblock %}

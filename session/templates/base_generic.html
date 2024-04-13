@@ -24,6 +24,7 @@
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'chassis' %}">All Chassis</a></li>
                 <li><a href="{% url 'engine' %}">All Engines</a></li>
+                <li><a href="{% url 'track' %}">All Tracks</a></li>
                 <li><a href="{% url 'session' %}">All Sessions</a></li>
                 {% if user.is_authenticated %}
                 <li>User: {{ user.get_username }}</li>
@@ -42,6 +43,9 @@
                 {% endif %}
                 {% if perms.session.add_engine %}
                 <li><a href="{% url 'engine-create' %}">Add an engine</a></li>
+                {% endif %}
+                {% if perms.session.add_track %}
+                <li><a href="{% url 'track-create' %}">Add a track</a></li>
                 {% endif %}
                 {% if perms.session.add_session %}
                 <li><a href="{% url 'session-create' %}">Add a session</a></li>
