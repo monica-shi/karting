@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Q
 
 from .forms import SessionForm
 from .models import Chassis, Engine, Session
@@ -196,6 +197,11 @@ class SessionCreate(PermissionRequiredMixin, SessionCreationView):
     model = Session
     initial = {'date': datetime.date.today(), 'session_time': datetime.datetime.now()}
     permission_required = 'session.add_session'
+
+    def get_form_class(self):
+        model_form = super().get_form_class()
+        model_form.base_fields['track'].limit_choices_to = Q(created_by=self.request.user) | Q(created_by_id=1)
+        return model_form
 
 
 class SessionClone(PermissionRequiredMixin, SessionCreationView):

@@ -72,6 +72,7 @@ class Track(models.Model):
                             help_text='The name of the track')
     country = models.CharField(blank=False, null=False, max_length=50, help_text='The country of the track')
     website = models.URLField(null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
