@@ -50,7 +50,7 @@ class UserFilteredDetailView(generic.DetailView):
 class ChassisListView(UserFilteredListView):
     model = Chassis
     context_object_name = 'chassis_list'
-    paginate_by = 10
+    paginate_by = 50
 
 
 class ChassisDetailView(UserFilteredDetailView):
@@ -60,7 +60,7 @@ class ChassisDetailView(UserFilteredDetailView):
 class EngineListView(UserFilteredListView):
     model = Engine
     context_object_name = 'engine_list'
-    paginate_by = 10
+    paginate_by = 50
 
 
 class EngineDetailView(UserFilteredDetailView):
@@ -70,7 +70,7 @@ class EngineDetailView(UserFilteredDetailView):
 class SessionListView(UserFilteredListView):
     model = Session
     context_object_name = 'session_list'
-    paginate_by = 10
+    paginate_by = 50
 
     def get_queryset(self, **kwargs):
         return super().get_queryset(**kwargs).order_by('-date', '-session_time')
