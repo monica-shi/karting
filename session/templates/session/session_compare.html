@@ -1,0 +1,359 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col-sm"><strong>Session</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg"><a href="{{ session.get_absolute_url }}">{{ session }}</a></div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Track</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.track }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Track Condition</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.track_condition }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Chassis</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg"><a href=" {{session.chassis.get_absolute_url}} ">{{ session.chassis }}</a></div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Engine</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg"><a href=" {{session.engine.get_absolute_url}} ">{{ session.engine }}</a></div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Weather</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.weather }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Track Temperature</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.track_temperature }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Engine Driver Size</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.engine_driver_size }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Sprocket Size</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.sprocket_size }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Tire</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Rim</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rim }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Low/Main Jetting</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.low_jetting }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>High Jetting</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.high_jetting }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Caster</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.caster }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Camber</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.camber }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Rear Axle Type</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rear_axle_type }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong>Rear Width</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rear_width }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col"><strong>Tire Pressure Before Session</strong></div>
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Front Right</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_fr }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Front Left</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_fl }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Rear Left</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_rl }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Rear Right</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_rr }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col"><strong>Tire Pressure After Session</strong></div>
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Front Right</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_fr_hot }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Front Left</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_fl_hot }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Rear Left</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_rl_hot }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Rear Right</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.tire_pressure_rr_hot }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col"><strong>Best lap</strong></div>
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Lap time</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.lap_time1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_max1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_min1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_max1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_min1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_max1 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_min1 }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col"><strong>Second Best lap</strong></div>
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Lap time</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.lap_time2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_max2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_min2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_max2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_min2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_max2 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_min2 }}</div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <div class="container-fluid text-right" style="margin-top:50px;">
+    <div class="row">
+      <div class = "col"><strong>3rd  Best lap</strong></div>
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Lap time</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.lap_time3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_max3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min RPM</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.rpm_min3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_max3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min EGT</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.egt_min3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Max Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_max3 }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="row">
+      <div class = "col-sm"><strong> --> Min Speed</strong></div>
+      {% for session in session_list %}
+          <div class = "col-lg">{{ session.speed_min3 }}</div>
+      {% endfor %}
+    </div>
+
+<br>
+<br>
+<br>
+{% endblock %}

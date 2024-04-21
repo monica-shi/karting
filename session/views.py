@@ -283,3 +283,13 @@ class SessionDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("session-delete", kwargs={"pk": self.object.pk})
             )
+
+
+class SessionCompare(generic.TemplateView):
+    template_name = 'session/session_compare.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session_ids = self.request.GET.getlist('sessions')
+        context['session_list'] = [Session.objects.get(pk=pk) for pk in session_ids]
+        return context

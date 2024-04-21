@@ -30,4 +30,5 @@ urlpatterns = [
     path('session/<int:pk>/delete/', views.SessionDelete.as_view(), name='session-delete'),
     path('session/<int:pk>/clone/', views.SessionClone.as_view(), name='session-clone'),
 
+    path('session/compare/', views.SessionCompare.as_view(), name='session-compare'),
 ]

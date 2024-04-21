@@ -5,9 +5,14 @@
   <h1>Session List</h1>
   <br>
   {% if session_list %}
+  <form action="{% url 'session-compare' %}" method="get">
+    {% csrf_token %}
     <div class="container-fluid text-left">
       {% for session in session_list %}
       <div class="row">
+        <div class="col-sm-auto">
+          <input type="checkbox" value="{{ session.id }}" name="sessions">
+        </div>
         <div class="col-sm">
           <a href="{{ session.get_absolute_url }}">{{ session }}</a>
         </div>
@@ -26,6 +31,8 @@
       </div>
       {% endfor %}
     </div>
+    <button type="submit" class="btn btn-primary">Compare selected sessions</button>
+    </form>
   {% else %}
     <p>There are no sessions in the database.</p>
   {% endif %}
