@@ -129,7 +129,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     sprocket_range = models.CharField(blank=True, help_text='Please enter a sprocket range if running a shifter kart.'
                                                             'Leave blank otherwise')
     tire = models.CharField(blank=False, max_length=200, help_text='Enter a brand of tire.')
-    tire_type = models.CharField(blank=True, null=True, default='slick', max_length=200, help_text='Wets or slick?')
+    tire_type = models.CharField(blank=True, null=True, default='sleek', max_length=200, help_text='Wets or sleek?')
     rim = models.CharField(blank=False, max_length=200, help_text='Enter a rim type.')
     high_jetting = models.IntegerField(blank=True, null=True)
     low_jetting = models.IntegerField(blank=True, null=True,
