@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<input type="file" accept="image/*" capture="camera" name="Take a photo to capture data">
 <form action="" method="post">
   {% csrf_token %}
   <table>
