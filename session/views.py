@@ -227,6 +227,11 @@ class SessionCreate(PermissionRequiredMixin, SessionCreationView):
         model_form.base_fields['engine'].limit_choices_to = Q(user=self.request.user)
         return model_form
 
+    def form_valid(self, form):
+        session = form.save(commit=False)
+        session.user = self.request.user
+        return super().form_valid(form)
+
 
 class SessionClone(PermissionRequiredMixin, SessionCreationView):
     model = Session
