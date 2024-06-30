@@ -183,9 +183,9 @@ class SessionCreationView(CreateView):
             for key in model_form.base_fields:
                 if key == 'lap_time1':
                     base_fields_with_file['result_photo'] \
-                        = django.forms.FileField(required=False,
-                                                 help_text="Take a photo of your MyChron/UniPro dash "
-                                                           "to auto fill the results")
+                        = django.forms.ImageField(required=False,
+                                                  help_text="Take a photo of your MyChron/UniPro dash "
+                                                            "to auto fill the results")
                 base_fields_with_file[key] = model_form.base_fields[key]
             model_form.base_fields = base_fields_with_file
 
