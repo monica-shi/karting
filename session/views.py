@@ -2,6 +2,7 @@
 
 import datetime
 
+import django.forms
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
@@ -170,6 +171,31 @@ class SessionCreationView(CreateView):
     model = Session
     form_class = SessionForm
 
+    def get_form_class(self):
+        model_form = super().get_form_class()
+        # Users can only see the tracks they added, or those added by user 'karting'
+        model_form.base_fields['track'].limit_choices_to = Q(created_by=self.request.user) | Q(created_by_id=1)
+        model_form.base_fields['chassis'].limit_choices_to = Q(user=self.request.user)
+        model_form.base_fields['engine'].limit_choices_to = Q(user=self.request.user)
+
+        if 'result_photo' not in model_form.base_fields:
+            base_fields_with_file = {}
+            for key in model_form.base_fields:
+                if key == 'lap_time1':
+                    base_fields_with_file['result_photo'] \
+                        = django.forms.FileField(required=False,
+                                                 help_text="Take a photo of your MyChron/UniPro dash "
+                                                           "to auto fill the results")
+                base_fields_with_file[key] = model_form.base_fields[key]
+            model_form.base_fields = base_fields_with_file
+
+        return model_form
+
+    def form_valid(self, form):
+        session = form.save(commit=False)
+        session.user = self.request.user
+        return super().form_valid(form)
+
 
 class TrackCreate(PermissionRequiredMixin, CreateView):
     model = Track
@@ -219,19 +245,6 @@ class SessionCreate(PermissionRequiredMixin, SessionCreationView):
     initial = {'date': datetime.date.today(), 'session_time': datetime.datetime.now()}
     permission_required = 'session.add_session'
 
-    def get_form_class(self):
-        model_form = super().get_form_class()
-        # Users can only see the tracks they added, or those added by user 'karting'
-        model_form.base_fields['track'].limit_choices_to = Q(created_by=self.request.user) | Q(created_by_id=1)
-        model_form.base_fields['chassis'].limit_choices_to = Q(user=self.request.user)
-        model_form.base_fields['engine'].limit_choices_to = Q(user=self.request.user)
-        return model_form
-
-    def form_valid(self, form):
-        session = form.save(commit=False)
-        session.user = self.request.user
-        return super().form_valid(form)
-
 
 class SessionClone(PermissionRequiredMixin, SessionCreationView):
     model = Session
@@ -248,6 +261,7 @@ class SessionClone(PermissionRequiredMixin, SessionCreationView):
         initial['track'] = old_session.track
         initial['track_conditions'] = old_session.track_conditions
         initial['weather'] = old_session.weather
+        initial['temp'] = old_session.temp
         initial['chassis'] = old_session.chassis
         initial['engine'] = old_session.engine
         initial['engine_driver_size'] = old_session.engine_driver_size
