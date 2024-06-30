@@ -3,7 +3,7 @@
 {% block content %}
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <table>
+  <table class="table table-sm">
     {{ form.as_table }}
   </table>
   <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
