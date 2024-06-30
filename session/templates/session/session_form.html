@@ -1,9 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<input type="file" accept="image/*" capture="camera" name="Take a photo to capture data">
 <form action="" method="post">
   {% csrf_token %}
+  <label for="camera">Use the button to take a photo on phone or choose a file on computer</label>
+  <br>
+  <input class="styled" type="file" id="camera" accept="image/*" capture="camera" value="Take a photo to capture data">
+  <br>
   <table>
     {{ form.as_table }}
   </table>
