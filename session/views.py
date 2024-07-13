@@ -254,6 +254,7 @@ class SessionClone(PermissionRequiredMixin, SessionCreationView):
         initial = super().get_initial()
         pk = self.kwargs['pk']
         old_session = Session.objects.get(pk=pk)
+        initial['driver_name'] = old_session.driver_name
         initial['date'] = datetime.date.today()
         initial['session_time'] = datetime.datetime.now()
         initial['race'] = old_session.race

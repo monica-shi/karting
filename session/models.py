@@ -106,7 +106,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     """Model representing a test session"""
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-
+    driver_name = models.CharField(null=True)
     date = models.DateField(blank=False)
     session_time = models.TimeField(blank=False, auto_now=False, auto_now_add=False)
     race = models.CharField(blank=False, max_length=100, choices=RACE_CHOICES,
@@ -194,7 +194,16 @@ class Session(models.Model):  # make sure blank=True for necessary fields
                                                                               'should have used bigger sprocket, etc.')
 
     def __str__(self):
-        return ' '.join([str(self.date), str(self.session_time.strftime('%H:%M:%S')), str(self.race), str(self.track)])
+        driver_name = self.driver_name
+        if self.driver_name is None:
+            driver_name = 'Unknown'
+        return ' | '.join([
+            str(driver_name),
+            str(self.date),
+            str(self.session_time.strftime('%H:%M:%S')),
+            str(self.race),
+            str(self.track)
+        ])
 
     def get_absolute_url(self):
         return reverse('session-detail', args=[str(self.id)])
