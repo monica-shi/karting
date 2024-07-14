@@ -1,9 +1,7 @@
 # Create your views here.
-
 import datetime
 
 import django.forms
-from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render
@@ -14,6 +12,7 @@ from django.db.models import Q
 
 from .forms import SessionForm
 from .models import Chassis, Engine, Session, Track
+from .open_ai import parse_mychron5_img
 
 
 def index(request):
@@ -191,9 +190,46 @@ class SessionCreationView(CreateView):
 
         return model_form
 
+    @staticmethod
+    def _parse_lap_time_str(lap_time_str):
+        result_decimal = float(0)
+        minunte_splits = lap_time_str.split(':')
+        if len(minunte_splits) > 1:
+            result_decimal += float(minunte_splits[0]) * 60
+            result_decimal += float(minunte_splits[1])
+        else:
+            result_decimal += float(minunte_splits[0])
+        return result_decimal
+
     def form_valid(self, form):
         session = form.save(commit=False)
         session.user = self.request.user
+
+        result_img = self.request.FILES.get('result_photo')
+        if result_img:
+            result_dict = parse_mychron5_img(result_img)
+            session.lap_time1 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+            session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+            session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+            session.rpm_max1 = int(result_dict['RPM'][0])
+            session.rpm_max2 = int(result_dict['RPM'][2])
+            session.rpm_max3 = int(result_dict['RPM'][4])
+            session.rpm_min1 = int(result_dict['RPM'][1])
+            session.rpm_min1 = int(result_dict['RPM'][3])
+            session.rpm_min1 = int(result_dict['RPM'][5])
+            session.speed_max1 = float(result_dict['MPH'][0])
+            session.speed_max2 = float(result_dict['MPH'][2])
+            session.speed_max3 = float(result_dict['MPH'][4])
+            session.speed_min1 = float(result_dict['MPH'][3])
+            session.speed_min2 = float(result_dict['MPH'][3])
+            session.speed_min3 = float(result_dict['MPH'][5])
+            session.egt_max1 = int(result_dict['EGT'][0])
+            session.egt_max2 = int(result_dict['EGT'][2])
+            session.egt_max3 = int(result_dict['EGT'][4])
+            session.egt_min1 = int(result_dict['EGT'][1])
+            session.egt_min1 = int(result_dict['EGT'][3])
+            session.egt_min1 = int(result_dict['EGT'][5])
+
         return super().form_valid(form)
 
 
