@@ -12,8 +12,6 @@ def __parse_result_message(message):
     section = None
     lines = message.split("\n")
     for line in lines:
-        print(line)
-
         if not line:
             continue
 

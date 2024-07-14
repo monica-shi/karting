@@ -217,8 +217,8 @@ class SessionCreationView(CreateView):
             session.rpm_max2 = int(result_dict['RPM'][2])
             session.rpm_max3 = int(result_dict['RPM'][4])
             session.rpm_min1 = int(result_dict['RPM'][1])
-            session.rpm_min1 = int(result_dict['RPM'][3])
-            session.rpm_min1 = int(result_dict['RPM'][5])
+            session.rpm_min2 = int(result_dict['RPM'][3])
+            session.rpm_min3 = int(result_dict['RPM'][5])
             session.speed_max1 = float(result_dict['MPH'][0])
             session.speed_max2 = float(result_dict['MPH'][2])
             session.speed_max3 = float(result_dict['MPH'][4])
@@ -229,8 +229,8 @@ class SessionCreationView(CreateView):
             session.egt_max2 = int(result_dict['EGT'][2])
             session.egt_max3 = int(result_dict['EGT'][4])
             session.egt_min1 = int(result_dict['EGT'][1])
-            session.egt_min1 = int(result_dict['EGT'][3])
-            session.egt_min1 = int(result_dict['EGT'][5])
+            session.egt_min2 = int(result_dict['EGT'][3])
+            session.egt_min3 = int(result_dict['EGT'][5])
 
         return super().form_valid(form)
 
