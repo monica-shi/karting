@@ -211,8 +211,8 @@ class SessionCreationView(CreateView):
         if result_img:
             result_dict = parse_mychron5_img(result_img)
             session.lap_time1 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
-            session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
-            session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+            session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][1])
+            session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][2])
             session.rpm_max1 = int(result_dict['RPM'][0])
             session.rpm_max2 = int(result_dict['RPM'][2])
             session.rpm_max3 = int(result_dict['RPM'][4])
