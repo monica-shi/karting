@@ -222,7 +222,7 @@ class SessionCreationView(CreateView):
             session.speed_max1 = float(result_dict['MPH'][0])
             session.speed_max2 = float(result_dict['MPH'][2])
             session.speed_max3 = float(result_dict['MPH'][4])
-            session.speed_min1 = float(result_dict['MPH'][3])
+            session.speed_min1 = float(result_dict['MPH'][1])
             session.speed_min2 = float(result_dict['MPH'][3])
             session.speed_min3 = float(result_dict['MPH'][5])
             session.egt_max1 = int(result_dict['EGT'][0])
