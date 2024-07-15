@@ -1,7 +1,9 @@
 # Create your views here.
 import datetime
 import io
+import logging
 
+import boto3
 import django.forms
 from PIL import Image
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -214,6 +216,16 @@ class SessionCreationView(CreateView):
             img_buffer = self.get_image_buffer(result_img)
             result_dict = parse_mychron5_img(img_buffer)
             self.update_session_with_ocr_result(session, result_dict)
+
+            try:
+                s3 = boto3.client('s3')
+                s3.put_object(Bucket='karting-photos',
+                              Key=f'{session.date}/{session.driver_name}/result_photo_{session.id}.jpg',
+                              Body=img_buffer,
+                              ContentType='image/jpeg',
+                              ACL='public-read')
+            except Exception as e:
+                logging.error(f'Error uploading photo to S3: {e}')
 
         return super().form_valid(form)
 
