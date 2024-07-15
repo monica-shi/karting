@@ -219,11 +219,11 @@ class SessionCreationView(CreateView):
 
             try:
                 s3 = boto3.client('s3')
-                s3.put_object(Bucket='karting-photos',
-                              Key=f'{session.date}/{session.driver_name}/result_photo_{session.id}.jpg',
+                s3.put_object(Bucket='karting-test',
+                              Key=f'{session.date}/{session.driver_name}/result_photo_{session.session_time}.jpg',
                               Body=img_buffer,
                               ContentType='image/jpeg',
-                              ACL='public-read')
+                              )
             except Exception as e:
                 logging.error(f'Error uploading photo to S3: {e}')
 
