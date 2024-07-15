@@ -217,7 +217,8 @@ class SessionCreationView(CreateView):
 
         return super().form_valid(form)
 
-    def get_image_buffer(self, img_file):
+    @staticmethod
+    def get_image_buffer(img_file):
         with Image.open(img_file) as pil_img:
             # Rotate the image if it is in portrait mode
             if pil_img.height > pil_img.width:
