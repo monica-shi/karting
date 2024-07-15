@@ -28,8 +28,8 @@ def __parse_result_message(message):
     return result_dict
 
 
-def parse_mychron5_img(result_img):
-    encoded_img = base64.b64encode(result_img.read()).decode('utf-8')
+def parse_mychron5_img(img_buffer):
+    encoded_img = base64.b64encode(img_buffer).decode('utf-8')
     completion = client.chat.completions.create(
         model="gpt-4o",
         messages=[

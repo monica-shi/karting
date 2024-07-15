@@ -1,7 +1,9 @@
 # Create your views here.
 import datetime
+import io
 
 import django.forms
+from PIL import Image
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseServerError
 from django.shortcuts import render
@@ -209,30 +211,44 @@ class SessionCreationView(CreateView):
 
         result_img = self.request.FILES.get('result_photo')
         if result_img:
-            result_dict = parse_mychron5_img(result_img)
-            session.lap_time1 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
-            session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][1])
-            session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][2])
-            session.rpm_max1 = int(result_dict['RPM'][0])
-            session.rpm_max2 = int(result_dict['RPM'][2])
-            session.rpm_max3 = int(result_dict['RPM'][4])
-            session.rpm_min1 = int(result_dict['RPM'][1])
-            session.rpm_min2 = int(result_dict['RPM'][3])
-            session.rpm_min3 = int(result_dict['RPM'][5])
-            session.speed_max1 = float(result_dict['MPH'][0])
-            session.speed_max2 = float(result_dict['MPH'][2])
-            session.speed_max3 = float(result_dict['MPH'][4])
-            session.speed_min1 = float(result_dict['MPH'][1])
-            session.speed_min2 = float(result_dict['MPH'][3])
-            session.speed_min3 = float(result_dict['MPH'][5])
-            session.egt_max1 = int(result_dict['EGT'][0])
-            session.egt_max2 = int(result_dict['EGT'][2])
-            session.egt_max3 = int(result_dict['EGT'][4])
-            session.egt_min1 = int(result_dict['EGT'][1])
-            session.egt_min2 = int(result_dict['EGT'][3])
-            session.egt_min3 = int(result_dict['EGT'][5])
+            img_buffer = self.get_image_buffer(result_img)
+            result_dict = parse_mychron5_img(img_buffer)
+            self.update_session_with_ocr_result(session, result_dict)
 
         return super().form_valid(form)
+
+    def get_image_buffer(self, img_file):
+        with Image.open(img_file) as pil_img:
+            # Rotate the image if it is in portrait mode
+            if pil_img.height > pil_img.width:
+                pil_img = pil_img.rotate(90, expand=True)
+
+            img_bytes = io.BytesIO()
+            pil_img.save(img_bytes, format='JPEG')
+            return img_bytes.getvalue()
+
+    def update_session_with_ocr_result(self, session, result_dict):
+        session.lap_time1 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+        session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][1])
+        session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][2])
+        session.rpm_max1 = int(result_dict['RPM'][0])
+        session.rpm_max2 = int(result_dict['RPM'][2])
+        session.rpm_max3 = int(result_dict['RPM'][4])
+        session.rpm_min1 = int(result_dict['RPM'][1])
+        session.rpm_min2 = int(result_dict['RPM'][3])
+        session.rpm_min3 = int(result_dict['RPM'][5])
+        session.speed_max1 = float(result_dict['MPH'][0])
+        session.speed_max2 = float(result_dict['MPH'][2])
+        session.speed_max3 = float(result_dict['MPH'][4])
+        session.speed_min1 = float(result_dict['MPH'][1])
+        session.speed_min2 = float(result_dict['MPH'][3])
+        session.speed_min3 = float(result_dict['MPH'][5])
+        session.egt_max1 = int(result_dict['EGT'][0])
+        session.egt_max2 = int(result_dict['EGT'][2])
+        session.egt_max3 = int(result_dict['EGT'][4])
+        session.egt_min1 = int(result_dict['EGT'][1])
+        session.egt_min2 = int(result_dict['EGT'][3])
+        session.egt_min3 = int(result_dict['EGT'][5])
 
 
 class TrackCreate(PermissionRequiredMixin, CreateView):
