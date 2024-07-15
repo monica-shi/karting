@@ -1,6 +1,8 @@
 import base64
-
 from openai import OpenAI
+import os
+from io import BytesIO
+from PIL import Image
 
 client = OpenAI(
     api_key='sk-svcacct-6Qr1cyZrWfWZe9bMFDBYT3BlbkFJHJPnxAKgqo6ErrWSTPfF'
@@ -29,7 +31,14 @@ def __parse_result_message(message):
 
 
 def parse_mychron5_img(result_img):
-    encoded_img = base64.b64encode(result_img.read()).decode('utf-8')
+    with Image.open(result_img) as pil_img:
+        if pil_img.height > pil_img.width:
+            rot_img = pil_img.transpose(Image.ROTATE_90)
+            pil_img = rot_img
+        buffered = BytesIO()
+        pil_img.save(buffered, format="JPEG")
+        encoded_img = base64.b64encode(buffered.getvalue()).decode('utf-8')
+
     completion = client.chat.completions.create(
         model="gpt-4o",
         messages=[
