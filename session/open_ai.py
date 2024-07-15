@@ -1,6 +1,8 @@
 import base64
+import io
 
 from openai import OpenAI
+from PIL import Image
 
 client = OpenAI(
     api_key='sk-svcacct-6Qr1cyZrWfWZe9bMFDBYT3BlbkFJHJPnxAKgqo6ErrWSTPfF'
