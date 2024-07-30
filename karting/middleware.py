@@ -15,7 +15,8 @@ class AuthRequiredMiddleware(object):
 
         if (not request.user.is_authenticated
                 and resolve(request.path).view_name != 'login'
-                and resolve(request.path).view_name != 'signup'):
+                and resolve(request.path).view_name != 'signup'
+                and resolve(request.path).view_name != 'password_reset'):
             return HttpResponseRedirect(reverse_lazy('login'))  # or http response
 
         response = self.get_response(request)
