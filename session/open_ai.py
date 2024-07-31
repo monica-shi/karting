@@ -48,7 +48,7 @@ def parse_mychron5_img(result_img):
                     """
                     This is a image of the screen of a gauge. The content in the image are organized in 2 tables.
                     The 2nd table has 5 columns: "LAP", "Best Laps", "RPM", "MPH", and "ET1 MAX". Please first give me
-                    the 3 numbers under column "LAP". he give me the 3 numbers under
+                    the 3 numbers under column "LAP". Then give me the 3 numbers under
                     column "Best Laps". Then give me the 6 numbers under column "RPM". Then give me the 6 numbers
                     under column "mph". Finally please give me the 6 numbers under column "EGT".
                     For each column, please print the column name first, then the values under the column. Add ':' 

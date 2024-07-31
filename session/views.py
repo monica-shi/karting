@@ -182,8 +182,11 @@ class SessionCreationView(CreateView):
             for key in model_form.base_fields:
                 if key == 'lap_time1':
                     help_text = ('Take a photo of your MyChron to auto fill the results. We currently only support '
-                                 'MyChron 5 dash. Scroll down and press the "Submit" button. This upload may take some '
-                                 'time, please be patient.')
+                                 'MyChron 5 dash and UniPro. Scroll down and press the "Submit" button. This upload '
+                                 'may take some time, please be patient.')
+                    base_fields_with_file['gauge_type'] \
+                        = django.forms.ChoiceField(
+                            required=False, choices=(('MyChron5', 'MyChron5'), ('UniPro', 'UniPro')))
                     base_fields_with_file['result_photo'] \
                         = django.forms.ImageField(required=False,
                                                   help_text=help_text)
