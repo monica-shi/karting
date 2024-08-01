@@ -219,7 +219,11 @@ class SessionCreationView(CreateView):
         if result_img:
             img_buffer = self.get_image_buffer(result_img)
             try:
-                s3 = boto3.client('s3')
+                s3 = boto3.client(
+                    's3',
+                    aws_access_key_id='AKIA5DKYNIOIJPFKAI23',
+                    aws_secret_access_key='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',
+                )
                 s3.put_object(Bucket='karting-test',
                               Key=f'{session.date}/{session.driver_name}/result_photo_{session.session_time}.jpg',
                               Body=img_buffer,
