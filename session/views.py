@@ -16,7 +16,7 @@ from django.db.models import Q
 
 from .forms import SessionForm
 from .models import Chassis, Engine, Session, Track
-from .open_ai import parse_mychron5_img
+from .open_ai import parse_gauge_img
 
 
 def index(request):
@@ -186,8 +186,11 @@ class SessionCreationView(CreateView):
             for key in model_form.base_fields:
                 if key == 'lap_time1':
                     help_text = ('Take a photo of your MyChron to auto fill the results. We currently only support '
-                                 'MyChron 5 dash. Scroll down and press the "Submit" button. This upload may take some '
-                                 'time, please be patient.')
+                                 'MyChron 5 dash and UniPro. Scroll down and press the "Submit" button. This upload '
+                                 'may take some time, please be patient.')
+                    base_fields_with_file['gauge_type'] \
+                        = django.forms.ChoiceField(
+                            required=False, choices=(('MyChron5', 'MyChron5'), ('UniPro', 'UniPro')))
                     base_fields_with_file['result_photo'] \
                         = django.forms.ImageField(required=False,
                                                   help_text=help_text)
@@ -212,11 +215,9 @@ class SessionCreationView(CreateView):
         session.user = self.request.user
 
         result_img = self.request.FILES.get('result_photo')
+        gauge_type = form.data['gauge_type']
         if result_img:
             img_buffer = self.get_image_buffer(result_img)
-            result_dict = parse_mychron5_img(img_buffer)
-            self.update_session_with_ocr_result(session, result_dict)
-
             try:
                 s3 = boto3.client('s3')
                 s3.put_object(Bucket='karting-test',
@@ -226,6 +227,52 @@ class SessionCreationView(CreateView):
                               )
             except Exception as e:
                 logging.error(f'Error uploading photo to S3: {e}')
+
+            result_dict = parse_gauge_img(img_buffer, gauge_type)
+            if gauge_type == 'MyChron5':
+                session.lap_time1 = self._parse_lap_time_str(result_dict['BEST LAPS'][0])
+                session.lap_time2 = self._parse_lap_time_str(result_dict['BEST LAPS'][1])
+                session.lap_time3 = self._parse_lap_time_str(result_dict['BEST LAPS'][2])
+                session.rpm_max1 = int(result_dict['RPM'][0])
+                session.rpm_max2 = int(result_dict['RPM'][2])
+                session.rpm_max3 = int(result_dict['RPM'][4])
+                session.rpm_min1 = int(result_dict['RPM'][1])
+                session.rpm_min2 = int(result_dict['RPM'][3])
+                session.rpm_min3 = int(result_dict['RPM'][5])
+                session.speed_max1 = float(result_dict['MPH'][0])
+                session.speed_max2 = float(result_dict['MPH'][2])
+                session.speed_max3 = float(result_dict['MPH'][4])
+                session.speed_min1 = float(result_dict['MPH'][1])
+                session.speed_min2 = float(result_dict['MPH'][3])
+                session.speed_min3 = float(result_dict['MPH'][5])
+                session.egt_max1 = int(result_dict['EGT'][0])
+                session.egt_max2 = int(result_dict['EGT'][2])
+                session.egt_max3 = int(result_dict['EGT'][4])
+                session.egt_min1 = int(result_dict['EGT'][1])
+                session.egt_min2 = int(result_dict['EGT'][3])
+                session.egt_min3 = int(result_dict['EGT'][5])
+            else:  # else if gauge_type == 'UniPro':
+                session.lap_time1 = self._parse_lap_time_str(result_dict['LAP TIME'][0])
+                session.lap_time2 = self._parse_lap_time_str(result_dict['LAP TIME'][1])
+                session.lap_time3 = self._parse_lap_time_str(result_dict['LAP TIME'][2])
+                session.rpm_max1 = int(float(result_dict['RPM'][0]) * 1000)
+                session.rpm_max2 = int(float(result_dict['RPM'][2]) * 1000)
+                session.rpm_max3 = int(float(result_dict['RPM'][4]) * 1000)
+                session.rpm_min1 = int(float(result_dict['RPM'][1]) * 1000)
+                session.rpm_min2 = int(float(result_dict['RPM'][3]) * 1000)
+                session.rpm_min3 = int(float(result_dict['RPM'][5]) * 1000)
+                session.speed_max1 = float(result_dict['GPS SPEED'][0])
+                session.speed_max2 = float(result_dict['GPS SPEED'][2])
+                session.speed_max3 = float(result_dict['GPS SPEED'][4])
+                session.speed_min1 = float(result_dict['GPS SPEED'][1])
+                session.speed_min2 = float(result_dict['GPS SPEED'][3])
+                session.speed_min3 = float(result_dict['GPS SPEED'][5])
+                session.egt_max1 = int(result_dict['TEMP 1'][0])
+                session.egt_max2 = int(result_dict['TEMP 1'][2])
+                session.egt_max3 = int(result_dict['TEMP 1'][4])
+                session.egt_min1 = int(result_dict['TEMP 1'][1])
+                session.egt_min2 = int(result_dict['TEMP 1'][3])
+                session.egt_min3 = int(result_dict['TEMP 1'][5])
 
         return super().form_valid(form)
 
