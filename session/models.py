@@ -124,7 +124,7 @@ class Session(models.Model):  # make sure blank=True for necessary fields
     # gear range might need multiple for shifter karts
     chassis = models.ForeignKey('Chassis', on_delete=models.PROTECT, null=True)
     engine = models.ForeignKey('Engine', on_delete=models.PROTECT, null=True)
-    engine_driver_size = models.IntegerField(blank=False, choices=[(r, r) for r in range(10, 14)])
+    engine_driver_size = models.IntegerField(blank=False, choices=[(r, r) for r in range(10, 16)])
     sprocket_size = models.IntegerField(blank=True, help_text='See below for shifter kart sprocket sizes')
     sprocket_range = models.CharField(blank=True, help_text='Please enter a sprocket range if running a shifter kart.'
                                                             'Leave blank otherwise')
