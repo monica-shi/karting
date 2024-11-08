@@ -4,7 +4,7 @@ from io import BytesIO
 from PIL import Image
 
 client = OpenAI(
-    api_key='sk-svcacct-6Qr1cyZrWfWZe9bMFDBYT3BlbkFJHJPnxAKgqo6ErrWSTPfF'
+    api_key=''
 )
 
 
